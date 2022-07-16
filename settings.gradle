@@ -1,0 +1,2 @@
+rootProject.name = "TransXactShun2"
+include ':app'
