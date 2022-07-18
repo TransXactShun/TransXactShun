@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TransXactShun">
         <activity
+            android:name=".menu.MainMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".registration.RegisterActivity"
             android:exported="false" />
         <activity

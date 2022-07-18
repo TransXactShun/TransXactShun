@@ -5,8 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.example.transxactshun.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
+
+    // firebase auth var
+    private lateinit var auth: FirebaseAuth
 
     // vars for UI elements
     private lateinit var nameEditText: EditText
@@ -21,6 +27,9 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
 
         // retrieve UI elements
         nameEditText = findViewById(R.id.editTextRegisterName)
