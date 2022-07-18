@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TransXactShun">
-        <activity android:name="com.example.transxactshun.MainActivity"
-                  android:exported="true">
+        <activity
+            android:name=".registration.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.transxactshun.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
