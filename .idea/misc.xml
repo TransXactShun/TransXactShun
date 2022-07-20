@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/rectangle_empty.xml" value="0.2055" />
         <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/graph_piechart_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/visualization_main_layout.xml" value="0.5625" />

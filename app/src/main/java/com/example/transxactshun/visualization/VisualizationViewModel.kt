@@ -7,11 +7,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import java.time.*
+import java.util.*
 
 class VisualizationViewModel(private val repository: ExpensesRepository) : ViewModel() {
+    companion object {
+        const val PACIFIC_TIME_OFFSET = 25200000L   // subtract this amount from milliseconds in UTC to get PST
+    }
     val expensesHistory: LiveData<List<ExpensesDatabaseEntry>> = repository.entireExpensesHistory.asLiveData()
     val activeGraphView = MutableLiveData<VisualizationGraphViews>(VisualizationGraphViews.DAILY)
     val activeCalendarView = MutableLiveData<VisualizationCalendarViews>(VisualizationCalendarViews.DAILY)
+    val startDate = MutableLiveData(Calendar.getInstance().timeInMillis - PACIFIC_TIME_OFFSET)
+    val endDate = MutableLiveData(Calendar.getInstance().timeInMillis - PACIFIC_TIME_OFFSET)
 
     fun addFakeEntries() {
         CoroutineScope(IO).launch {

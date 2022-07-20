@@ -10,73 +10,71 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="The following 2 buttons are for testing only" />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="The following 2 buttons are for testing only" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="2">-->
 
-            <Button
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Add"/>
+<!--            <Button-->
+<!--                android:id="@+id/btn_add"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Add"/>-->
 
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete All"/>
+<!--            <Button-->
+<!--                android:id="@+id/btn_delete"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Delete All"/>-->
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <Button
-                android:id="@+id/btn_daily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_daily"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btn_weekly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_weekly"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btn_monthly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_monthly"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart"
             android:layout_height="300dp"
             android:layout_width="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="10">
+            <TextView
+                android:id="@+id/header_date_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Showing:"
+                android:textSize="16dp"
+                android:layout_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/date_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tues Jan 4, 2022 to Tues Mar 4, 2022"
+                android:textSize="16dp"
+                android:gravity="end"
+                app:layout_constraintEnd_toStartOf="@id/dropdown_arrow"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/rectangle_empty" />
+            <ImageView
+                android:id="@+id/dropdown_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
