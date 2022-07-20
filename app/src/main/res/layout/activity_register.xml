@@ -11,50 +11,87 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/display_name_registration_page" />
+
         <EditText
             android:id="@+id/editTextRegisterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName" />
+            android:hint="@string/name_hint__registration_page"
+            android:inputType="textPersonName"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/email_address_registration_page" />
 
         <EditText
             android:id="@+id/editTextRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/email_hint_registration_page"
+            android:inputType="textEmailAddress"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/password_min_7_characters_registration_page" />
 
         <EditText
             android:id="@+id/editTextRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
+            android:hint="@string/password_hint_registration_page"
+            android:inputType="textPassword"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/confirm_password_registration_page" />
 
         <EditText
             android:id="@+id/editTextRegisterConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword" />
+            android:hint="@string/confirm_password_hint_registration_page"
+            android:inputType="textPassword"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/phone_number_10_digits_only_registration_page" />
 
         <EditText
             android:id="@+id/editTextRegisterPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="phone" />
+            android:hint="@string/phone_number_hint_registration_page"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:padding="5dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <Button
                 android:id="@+id/buttonRegister"
@@ -62,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onRegisterFirebase"
-                android:text="REGISTER" />
+                android:text="@string/register_registration_page" />
 
             <Button
                 android:id="@+id/buttonBack"
@@ -70,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onBackClick"
-                android:text="BACK" />
+                android:text="@string/back_registration_page" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
