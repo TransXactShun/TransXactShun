@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.transxactshun.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
@@ -117,8 +118,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // if registration succeeds
                     val user = auth.currentUser
-                    //TODO: update user profile
-                    // user.updateProfile()
+
                     Toast.makeText(
                         baseContext, "User registration complete!",
                         Toast.LENGTH_SHORT
@@ -138,6 +138,9 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    private fun addUserDetails(phoneNumber: String, userName: String) {
+        //TODO: add user phone number and name to profile
+    }
 
     fun onBackClick(view: View) {
         // close activity
