@@ -8,14 +8,20 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.transxactshun.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
     // firebase auth var
     private lateinit var auth: FirebaseAuth
+
+    // firebase db var
+    private lateinit var database: DatabaseReference
 
     // vars for UI elements
     private lateinit var nameEditText: EditText
@@ -41,6 +47,9 @@ class RegisterActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+
+        // Initialize Firebase DB
+        database = Firebase.database.reference
 
         // retrieve UI elements
         nameEditText = findViewById(R.id.editTextRegisterName)
@@ -119,6 +128,9 @@ class RegisterActivity : AppCompatActivity() {
                     // if registration succeeds
                     val user = auth.currentUser
 
+                    // add additional user details in db
+                    addUserDetails(user, userEmail, userName, userPhone)
+
                     Toast.makeText(
                         baseContext, "User registration complete!",
                         Toast.LENGTH_SHORT
@@ -138,8 +150,25 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun addUserDetails(phoneNumber: String, userName: String) {
-        //TODO: add user phone number and name to profile
+    private fun addUserDetails(user: FirebaseUser?, email: String, name: String, phone: String) {
+        try {
+            val userData = UserProfile(email, name, phone)
+
+            // add entry to DB
+            var userUID = user?.uid
+            if (userUID != null) {
+                database.child("userProfile").child(userUID).setValue(userData)
+            } else {
+                throw Exception("Unable to retrieve UID for Firebase User")
+            }
+        } catch (ex: Exception) {
+            println("Error: $ex")
+            Toast.makeText(
+                baseContext,
+                "User registered but unable to save name and phone number!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     fun onBackClick(view: View) {
