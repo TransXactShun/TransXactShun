@@ -40,20 +40,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button"
+            <GridView
+                android:id="@+id/menuGridView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Transaction" />
+                android:layout_height="300dp"
+                android:numColumns="1"
+                android:padding="16dp" />
 
-            <Button
-                android:id="@+id/btn_visualization"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Show Graphs" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:onClick="onLogOutClick"
+                android:text="Logout" />
+
+
+        </LinearLayout>
     </LinearLayout>
+
 
 </ScrollView>
