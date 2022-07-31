@@ -2,10 +2,13 @@ package com.example.transxactshun.visualization
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.transxactshun.R
@@ -24,10 +27,10 @@ import lecho.lib.hellocharts.util.ChartUtils
 import lecho.lib.hellocharts.view.ColumnChartView
 import lecho.lib.hellocharts.view.PreviewColumnChartView
 
-enum class TimeGroup {
-    DAILY,
-    WEEKLY,
-    MONTHLY
+enum class TimeGroup(val displayValue: String) {
+    DAILY("Daily"),
+    WEEKLY("Weekly"),
+    MONTHLY("Monthly")
 }
 
 class TrendViewFragment: Fragment() {
@@ -38,6 +41,7 @@ class TrendViewFragment: Fragment() {
     private lateinit var btnDaily: Button
     private lateinit var btnWeekly: Button
     private lateinit var btnMonthly: Button
+    private lateinit var currentCategoryText: TextView
     private val viewModel: VisualizationViewModel by activityViewModels { VisualizationViewModelFactory(
         ExpensesRepository(ExpensesDatabase.getInstance(requireContext()).expensesDatabaseDao)
     ) }
@@ -57,6 +61,7 @@ class TrendViewFragment: Fragment() {
         val ui = inflater.inflate(R.layout.visualization_column_trend_layout, container, false)
         mainChart = ui.findViewById(R.id.main_column_chart)
         previewChart = ui.findViewById(R.id.preview_column_chart)
+        currentCategoryText = ui.findViewById(R.id.current_time_group_text)
         btnDaily = ui.findViewById(R.id.btn_daily)
         btnWeekly = ui.findViewById(R.id.btn_weekly)
         btnMonthly = ui.findViewById(R.id.btn_monthly)
@@ -81,6 +86,10 @@ class TrendViewFragment: Fragment() {
 
         viewModel.timeGroup.observe(viewLifecycleOwner) {
             buildColumnCharts(it)
+            val displayText = "${it.displayValue} Trend"
+            val underlineText = SpannableString(displayText)
+            underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
+            currentCategoryText.text = underlineText
         }
         return ui
     }

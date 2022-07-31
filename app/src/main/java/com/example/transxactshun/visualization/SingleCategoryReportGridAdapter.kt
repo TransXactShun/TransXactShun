@@ -3,9 +3,12 @@ package com.example.transxactshun.visualization
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.transxactshun.R
+import com.example.transxactshun.database.ExpenseCategory
+import lecho.lib.hellocharts.util.ChartUtils
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -24,6 +27,7 @@ class SingleCategoryReportGridAdapter(
      */
     class SingleCategoryReportViewHolder(itemView: View, val onItemClick: (Int) -> Unit): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val dateText: TextView = itemView.findViewById(R.id.date)
+        val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
         val vendorText: TextView = itemView.findViewById(R.id.vendor)
         val costText: TextView = itemView.findViewById(R.id.cost)
         /**
@@ -75,6 +79,8 @@ class SingleCategoryReportGridAdapter(
         holder.vendorText.text = item.vendor
         val costString = VisualizationUtil.currencyFormat(item.cost)
         holder.costText.text = costString
+        val icon = getIcon(item.category)
+        holder.categoryImage.setImageResource(icon)
     }
 
     /**
@@ -83,5 +89,29 @@ class SingleCategoryReportGridAdapter(
      */
     override fun getItemCount(): Int {
         return expenses.size
+    }
+
+    /**
+     *
+     */
+    private fun getIcon(category: ExpenseCategory): Int {
+        return when (category) {
+            ExpenseCategory.GROCERY -> R.drawable.icon_grocery
+            ExpenseCategory.RESTAURANTS -> R.drawable.icon_restaurant
+            ExpenseCategory.ENTERTAINMENT -> R.drawable.icon_entertainment
+            ExpenseCategory.OFFICE -> R.drawable.icon_office
+            ExpenseCategory.PERSONAL -> R.drawable.icon_personal
+            ExpenseCategory.TRAVEL -> R.drawable.icon_travel
+            ExpenseCategory.RECURRING -> R.drawable.icon_recurring
+            ExpenseCategory.TECHNOLOGY -> R.drawable.icon_technology
+            ExpenseCategory.CONSTRUCTION -> R.drawable.icon_construction
+            ExpenseCategory.HOME -> R.drawable.icon_home
+            ExpenseCategory.TRANSPORTATION -> R.drawable.icon_transportation
+            ExpenseCategory.MEDICAL -> R.drawable.icon_medical
+            ExpenseCategory.EDUCATION -> R.drawable.icon_education
+            ExpenseCategory.FINANCIAL -> R.drawable.icon_financial
+            ExpenseCategory.OTHER -> R.drawable.icon_other
+            else -> R.drawable.icon_other
+        }
     }
 }

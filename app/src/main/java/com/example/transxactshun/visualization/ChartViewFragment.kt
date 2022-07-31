@@ -174,7 +174,12 @@ class ChartViewFragment: Fragment() {
     }
 
 
-
+    /**
+     * Takes 2 dates and formats them to display them as representing a date range
+     * Also provides an underline to the text
+     * @param start - the start dates of the range in milliseconds
+     * @param end - the end dates of the range in milliseconds
+     */
     // https://stackoverflow.com/questions/5645789/how-to-set-underline-text-on-textview
     // https://stackoverflow.com/questions/7953725/how-to-convert-milliseconds-to-date-format-in-android
     private fun onDateSelectedSetText(start: Long, end: Long) {
