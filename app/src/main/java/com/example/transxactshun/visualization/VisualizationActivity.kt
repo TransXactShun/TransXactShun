@@ -23,8 +23,8 @@ enum class VisualizationGraphViews(val string: String) {
 
 class VisualizationActivity: AppCompatActivity() {
     private val TAG = "VisualizationActivity"
-    private lateinit var graphFragment: GraphViewFragment
-    private lateinit var calendarFragment: CalendarViewFragment
+    private lateinit var graphFragment: ChartViewFragment
+    private lateinit var calendarFragment: TrendViewFragment
     private lateinit var fragments: ArrayList<Fragment>
     private lateinit var tab: TabLayout
     private lateinit var viewPage: ViewPager2
@@ -41,19 +41,21 @@ class VisualizationActivity: AppCompatActivity() {
 
         val graphFragmentTag = "graphFragment"
         if (supportFragmentManager.findFragmentByTag(graphFragmentTag) == null) {
-            graphFragment = GraphViewFragment()
+            graphFragment = ChartViewFragment()
             fragments.add(graphFragment)
         }
 
         val calendarFragmentTag = "calendarFragment"
         if (supportFragmentManager.findFragmentByTag(calendarFragmentTag) == null) {
-            calendarFragment = CalendarViewFragment()
+            calendarFragment = TrendViewFragment()
             fragments.add(calendarFragment)
         }
 
         visualFragmentStateAdapter = VisualizationFragmentStateAdapter(this, fragments)
         viewPage.adapter = visualFragmentStateAdapter
-        val labels = arrayOf("Graph View", "Calendar View")
+        // Disable swiping between the two fragments to switch
+        viewPage.isUserInputEnabled = false
+        val labels = arrayOf("Category View", "Trend View")
         tabConfigurationStrategy = TabLayoutMediator.TabConfigurationStrategy() {
             tab: TabLayout.Tab, position: Int ->
                 tab.text = labels[position]

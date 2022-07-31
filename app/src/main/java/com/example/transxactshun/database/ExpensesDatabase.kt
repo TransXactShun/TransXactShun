@@ -10,23 +10,48 @@ enum class PaymentType(val string: String) {
     DEBIT("Debit"),
     CREDIT("Credit"),
     CHEQUE("Cheque"),
-    GIFT("Gift"),
+    GIFT("Gift Card/Certificate"),
 }
 
-enum class ExpenseCategory(val string: String) {
+enum class ExpenseCategory(val displayValue: String) {
     GROCERY("Grocery"),
-    GAS("Gas"),
     RESTAURANTS("Restaurants"),
-    DRUG_STORE("Drug Store"),
     ENTERTAINMENT("Entertainment"),
     TRAVEL("Travel"),
     RECURRING("Recurring Bill Payments"),
+    PERSONAL("Personal"),
+    TECHNOLOGY("Technology"),
     TRANSPORTATION("Transportation"),
-    RETAIL("Retail"),
     MEDICAL("Medical"),
+    HOME("Home"),
+    EDUCATION("Education"),
     CONSTRUCTION("Construction"),
-    FURNITURE("Furniture"),
-    HOME("Home")
+    OFFICE("Office"),
+    FINANCIAL("Financial"),
+    OTHER("Other");
+
+    companion object {
+        fun getExpenseCategoryFrom(value: String): ExpenseCategory {
+            return when (value) {
+                "Grocery" -> GROCERY
+                "Restaurants" -> RESTAURANTS
+                "Entertainment" -> ENTERTAINMENT
+                "Travel" -> TRAVEL
+                "Recurring Bill Payments" -> RECURRING
+                "Technology" -> TECHNOLOGY
+                "Personal" -> PERSONAL
+                "Transportation" -> TRANSPORTATION
+                "Medical" -> MEDICAL
+                "Home" -> HOME
+                "Education" -> EDUCATION
+                "Construction" -> CONSTRUCTION
+                "Office" -> OFFICE
+                "Financial" -> FINANCIAL
+                "Other" -> OTHER
+                else -> OTHER
+            }
+        }
+    }
 }
 
 @Database(entities = [ExpensesDatabaseEntry::class], version = 1)

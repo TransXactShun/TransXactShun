@@ -17,16 +17,18 @@ data class ExpensesDatabaseEntry(
     var items: ByteArray,
 
     @ColumnInfo(name="date", typeAffinity = ColumnInfo.INTEGER)
-    // In seconds
+    // In milliseconds
     var epochDate: Long = 0L,
 
     @ColumnInfo(name="payment_type", typeAffinity = ColumnInfo.INTEGER)
+    // Should match enum class PaymentType in ExpensesDatabase
     var paymentType: Int,
 
     @ColumnInfo(name="note", typeAffinity = ColumnInfo.TEXT)
     var note: String,
 
     @ColumnInfo(name="category", typeAffinity = ColumnInfo.INTEGER)
+    // Should match enum class ExpensesCategory in ExpensesDatabase
     var category: Int,
 
     @ColumnInfo(name="vendor", typeAffinity = ColumnInfo.TEXT)
