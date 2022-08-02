@@ -18,6 +18,6 @@ class MenuViewModel : ViewModel() {
         "Spending Trends (Graphs)",
         "Bill Reminder",
         "Set Monthly Budget",
-        "Export Reports"
+        "Share Receipts"
     )
 }
