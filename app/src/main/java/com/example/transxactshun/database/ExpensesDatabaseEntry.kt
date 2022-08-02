@@ -9,6 +9,9 @@ data class ExpensesDatabaseEntry(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 
+    @ColumnInfo(name="email", typeAffinity = ColumnInfo.TEXT)
+    var email: String,
+
     @ColumnInfo(name="cost", typeAffinity = ColumnInfo.INTEGER)
     // In cents
     var cost: Int = 0,
@@ -41,6 +44,7 @@ data class ExpensesDatabaseEntry(
         other as ExpensesDatabaseEntry
 
         if (id != other.id) return false
+        if (email != other.email) return false
         if (cost != other.cost) return false
         if (!items.contentEquals(other.items)) return false
         if (epochDate != other.epochDate) return false
@@ -54,13 +58,15 @@ data class ExpensesDatabaseEntry(
 
     override fun hashCode(): Int {
         var result = id.hashCode()
+        result = 31 * result + email.hashCode()
         result = 31 * result + cost
         result = 31 * result + items.contentHashCode()
         result = 31 * result + epochDate.hashCode()
-        result = 31 * result + paymentType.hashCode()
+        result = 31 * result + paymentType
         result = 31 * result + note.hashCode()
-        result = 31 * result + category.hashCode()
+        result = 31 * result + category
         result = 31 * result + vendor.hashCode()
         return result
     }
+
 }
