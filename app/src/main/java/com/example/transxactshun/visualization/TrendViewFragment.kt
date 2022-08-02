@@ -118,8 +118,10 @@ class TrendViewFragment: Fragment() {
 //                subcolumnValues.add(SubcolumnValue(cost.toFloat(), getCategoryColour(expenseCategories[index])))
             }
             subcolumnValues.add(SubcolumnValue(costInPeriod.toFloat(), ChartUtils.pickColor()))
-            mainColumnValues.add(Column(subcolumnValues))
-            previewColumnValues.add(Column(subcolumnValues))
+            val column = Column(subcolumnValues)
+            column.setHasLabels(true)
+            mainColumnValues.add(column)
+            previewColumnValues.add(column)
         }
         val data = ColumnChartData(mainColumnValues)
         val previewData = ColumnChartData(previewColumnValues)

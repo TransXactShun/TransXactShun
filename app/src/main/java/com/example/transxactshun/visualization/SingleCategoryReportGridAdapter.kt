@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.transxactshun.R
 import com.example.transxactshun.database.ExpenseCategory
-import lecho.lib.hellocharts.util.ChartUtils
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -36,7 +35,7 @@ class SingleCategoryReportGridAdapter(
         companion object {
             fun from(parent: ViewGroup, onClick: (Int) -> Unit): SingleCategoryReportViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.visualization_single_expense_item_layout, parent,false)
+                val view = layoutInflater.inflate(R.layout.visualization_single_expense_with_category_item_layout, parent,false)
                 return SingleCategoryReportViewHolder(view, onClick)
             }
         }

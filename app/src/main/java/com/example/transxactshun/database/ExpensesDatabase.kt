@@ -54,7 +54,7 @@ enum class ExpenseCategory(val displayValue: String) {
     }
 }
 
-@Database(entities = [ExpensesDatabaseEntry::class], version = 1)
+@Database(entities = [ExpensesDatabaseEntry::class], version = 2)
 abstract class ExpensesDatabase: RoomDatabase() {
     abstract val expensesDatabaseDao: ExpensesDatabaseDao
     companion object {
