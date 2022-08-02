@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.example.transxactshun.R
 import com.example.transxactshun.database.ExpenseCategory
 import com.example.transxactshun.database.ExpensesDatabase
 import com.example.transxactshun.database.ExpensesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import lecho.lib.hellocharts.formatter.AxisValueFormatter
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter
 import lecho.lib.hellocharts.gesture.ZoomType
@@ -42,6 +46,9 @@ class TrendViewFragment: Fragment() {
     private lateinit var btnWeekly: Button
     private lateinit var btnMonthly: Button
     private lateinit var currentCategoryText: TextView
+    private lateinit var totalCostTextValue: TextView
+    private lateinit var totalCostTextHeader: TextView
+    private lateinit var costReportView: RecyclerView
     private val viewModel: VisualizationViewModel by activityViewModels { VisualizationViewModelFactory(
         ExpensesRepository(ExpensesDatabase.getInstance(requireContext()).expensesDatabaseDao)
     ) }
@@ -65,6 +72,9 @@ class TrendViewFragment: Fragment() {
         btnDaily = ui.findViewById(R.id.btn_daily)
         btnWeekly = ui.findViewById(R.id.btn_weekly)
         btnMonthly = ui.findViewById(R.id.btn_monthly)
+        costReportView = ui.findViewById(R.id.trend_report_summary)
+        totalCostTextHeader = ui.findViewById(R.id.trend_report_header)
+        totalCostTextValue = ui.findViewById(R.id.trend_report_total)
 
         mainChart.isZoomEnabled = false
         mainChart.isScrollEnabled = false
@@ -91,6 +101,13 @@ class TrendViewFragment: Fragment() {
             underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
             currentCategoryText.text = underlineText
         }
+
+        viewModel.totalCostInTimeGroup.observe(viewLifecycleOwner) {
+            val displayText = VisualizationUtil.currencyFormat(it)
+            val underlineText = SpannableString(displayText)
+            underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
+            totalCostTextValue.text = underlineText
+        }
         return ui
     }
 
@@ -99,44 +116,90 @@ class TrendViewFragment: Fragment() {
      * @param timeGroup - enum class TimeGroup for daily, weekly or monthly view
      */
     private fun buildColumnCharts(timeGroup: TimeGroup) {
-        lateinit var chartBuilderValue: TrendChartBuilderValue
-        when (timeGroup) {
-            TimeGroup.DAILY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.DAILY)}
-            TimeGroup.WEEKLY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.WEEKLY)}
-            TimeGroup.MONTHLY -> {chartBuilderValue= viewModel.getExpensesByTimeGroup(TimeGroup.MONTHLY)}
-            else -> {}
-        }
-        val numColumns = chartBuilderValue.dates.size
-        val mainColumnValues = ArrayList<Column>()
-        val previewColumnValues = ArrayList<Column>()
-//        val expenseCategories = ExpenseCategory.values()
-        for (period in 0 until numColumns) {
-            val subcolumnValues = ArrayList<SubcolumnValue>()
-            var costInPeriod = 0
-            chartBuilderValue.costs[period].forEachIndexed { index, cost ->
-                costInPeriod += cost / 100
-//                subcolumnValues.add(SubcolumnValue(cost.toFloat(), getCategoryColour(expenseCategories[index])))
+        CoroutineScope(IO).launch {
+            lateinit var chartBuilderValue: ArrayList<TrendChartBuilderValue>
+            when (timeGroup) {
+                TimeGroup.DAILY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.DAILY)}
+                TimeGroup.WEEKLY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.WEEKLY)}
+                TimeGroup.MONTHLY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.MONTHLY)}
+                else -> {}
             }
-            subcolumnValues.add(SubcolumnValue(costInPeriod.toFloat(), ChartUtils.pickColor()))
-            val column = Column(subcolumnValues)
-            column.setHasLabels(true)
-            mainColumnValues.add(column)
-            previewColumnValues.add(column)
+            val numColumns = chartBuilderValue.size
+
+            // Update the Total Cost
+            CoroutineScope(IO).launch {
+                val total = chartBuilderValue.sumOf {
+                    it.totalCosts
+                }
+                withContext(Main) {
+                    viewModel.totalCostInTimeGroup.value = total
+                }
+            }
+
+            // Update the RecyclerView
+            CoroutineScope(IO).launch {
+                val sortedExpenses = chartBuilderValue.sortedBy {
+                    it.totalCosts
+                }.reversed()
+                val reportAdapter = SingleTotalReportGridAdapter(sortedExpenses) {
+                        position -> Log.i(TAG, "$position selected")
+                }
+                withContext(Main) {
+                    costReportView.adapter = reportAdapter
+                }
+            }
+
+            // Update the Chart
+            CoroutineScope(IO).launch {
+                val mainColumnValues = ArrayList<Column>()
+                val previewColumnValues = ArrayList<Column>()
+                for (period in 0 until numColumns) {
+                    val subcolumnValues = ArrayList<SubcolumnValue>()
+                    var costInPeriod = 0
+    //                chartBuilderValue[period].costs.forEachIndexed { index, cost ->
+    //                    costInPeriod += cost/100
+    //                    total += cost
+    //                    Log.i(TAG, "CostInPeriod: $costInPeriod")
+    //                }
+                    costInPeriod += chartBuilderValue[period].totalCosts / 100
+                    val columnColour = ChartUtils.pickColor()
+                    val subColumn = SubcolumnValue(costInPeriod.toFloat(), columnColour)
+                    if (costInPeriod > 0) {
+                        val label = VisualizationUtil.currencyFormat(costInPeriod*100)
+                        subColumn.setLabel(label)
+                    }
+                    subcolumnValues.add(SubcolumnValue(subColumn))
+                    val mainColumn = Column(subcolumnValues)
+                    val previewColumn = Column(subcolumnValues)
+                    if (costInPeriod > 0) mainColumn.setHasLabels(true)
+                    mainColumnValues.add(mainColumn)
+                    previewColumnValues.add(previewColumn)
+                }
+                val data = ColumnChartData(mainColumnValues)
+                val previewData = ColumnChartData(previewColumnValues)
+                val formattedDatesLabels = ArrayList<AxisValue>()
+                chartBuilderValue.forEachIndexed { index, values ->
+                    // Approximately 5 date labels should be visible
+                    if (index % (numColumns/5) == 0)
+                        formattedDatesLabels.add(AxisValue(index.toFloat()).setLabel(VisualizationUtil.millisecondsToDateFormat(values.date)))
+                }
+                withContext(Main) {
+                    data.axisXBottom = Axis().setAutoGenerated(false).setValues(formattedDatesLabels)
+                    data.axisYLeft = Axis().setHasLines(true)
+                    mainChart.columnChartData = data
+                    previewChart.columnChartData = previewData
+                    previewX(true)
+                }
+            }
         }
-        val data = ColumnChartData(mainColumnValues)
-        val previewData = ColumnChartData(previewColumnValues)
-//        val formattedDatesLabels = ArrayList<String>()
-        val formattedDatesLabels = ArrayList<AxisValue>()
-        chartBuilderValue.dates.forEachIndexed { index, millisecond ->
-            // Approximately 5 date labels should be visible
-            if (index % (numColumns/5) == 0)
-                formattedDatesLabels.add(AxisValue(index.toFloat()).setLabel(VisualizationUtil.millisecondsToDateFormat(millisecond)))
-        }
-        data.axisXBottom = Axis().setAutoGenerated(false).setValues(formattedDatesLabels)
-        data.axisYLeft = Axis().setHasLines(true)
-        mainChart.columnChartData = data
-        previewChart.columnChartData = previewData
-        previewX(true)
+    }
+
+    /**
+     * Builds the data for the report summary and creates the adapter for the recycler view
+     * @param expenseSummary - an arraylist of SingleExpenseSummary objects
+     */
+    private suspend fun buildReportSummary(expenses: List<TrendChartBuilderValue>) {
+
     }
 
     /**

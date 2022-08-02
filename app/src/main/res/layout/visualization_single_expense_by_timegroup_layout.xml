@@ -4,37 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="16" >
+    android:weightSum="2" >
 
     <TextView
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
-        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="center"
         android:text="Date"/>
-
-    <ImageView
-        android:id="@+id/category_image"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:src="@drawable/icon_other"
-        android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/vendor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="6"
-        android:gravity="center_vertical"
-        android:text="Vendor" />
 
     <TextView
         android:id="@+id/cost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="Cost" />
 </LinearLayout>

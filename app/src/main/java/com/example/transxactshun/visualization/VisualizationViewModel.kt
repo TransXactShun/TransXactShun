@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.exp
 
-data class TrendChartBuilderValue(val dates: LongArray, val costs: Array<IntArray>, val summary: Array<ArrayList<SingleExpenseSummary>>)
+data class TrendChartBuilderValue(val date: Long, val costs: IntArray, val totalCosts: Int, val summary: ArrayList<SingleExpenseSummary>)
 data class SingleExpenseSummary(val date: Long, val vendor: String, val cost: Int, val category: ExpenseCategory)
 
 class VisualizationViewModel(private val repository: ExpensesRepository) : ViewModel() {
@@ -48,6 +48,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
     val endDate = MutableLiveData(Calendar.getInstance().timeInMillis - PACIFIC_TIME_OFFSET)
     val pieChartSelectedCategory = MutableLiveData<ExpenseCategory?>()
     val timeGroup = MutableLiveData<TimeGroup>(TimeGroup.WEEKLY)
+    val totalCostInTimeGroup = MutableLiveData<Int>(0)
 
     /**
      * Retrieves expense history of 1 category between two dates
@@ -116,16 +117,15 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
 
     /**
      * Filters and separates transactions based on a TimeGroup (daily, weekly, monthly) and returns
-     * the results in a data class
+     * the results with an array of data class objects
      * @param timeGroup - A TimeGroup enum that specifies the temporal category to group transactions in
      * @return a TrendChartBuilderValue data object containing the following:
-     *      1. An array containing the start of the time group in milliseconds (ex. the start of a week)
-     *      2. An array containing an array for each category cost (index is equivalent to the ordinal value of categories in ExpenseCategory enum class)
+     *      1. The start of the time group in milliseconds (ex. the start of a week)
+     *      2. An array for each category cost (index is equivalent to the ordinal value of categories in ExpenseCategory enum class)
      *      3. An array containing certain transaction information for every expense tallied
-     *      note: the indices for each array are linked (ie. element 0 for all arrays are related, etc.)
      */
     // https://stackoverflow.com/questions/23944370/how-to-get-milliseconds-from-localdatetime-in-java-8
-    fun getExpensesByTimeGroup(timeGroup: TimeGroup): TrendChartBuilderValue {
+    suspend fun getExpensesByTimeGroup(timeGroup: TimeGroup): ArrayList<TrendChartBuilderValue> {
         var amountOfData = 0    // Will be in days/weeks/months depending on user selection
         var amountOfDataInDays = 0  // For determining how many days to go back
         var amountOfDataInMilliseconds = 0L  // For determining separate blocks of data
@@ -149,31 +149,38 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
                 amountOfDataInMilliseconds = ONE_MONTH_IN_MS
             }
         }
+        val results = ArrayList<TrendChartBuilderValue>(amountOfData)
         val timePeriod = LongArray(amountOfData) {0L}
-        val totalInPeriodPerCategory = Array<IntArray>(amountOfData) {IntArray(ExpenseCategory.values().size) {0} }
+        val totalInPeriodPerCategory = Array(amountOfData) {IntArray(ExpenseCategory.values().size) {0} }
+        val totalInPeriod = IntArray(amountOfData) {0}
         val expensesInPeriod = Array<ArrayList<SingleExpenseSummary>>(amountOfData) {ArrayList()}
-        CoroutineScope(IO).launch {
-            val now = Calendar.getInstance().timeInMillis
-            var startOfPeriod = closestDateFullWeekGoingBack(amountOfDataInDays)
+        val now = Calendar.getInstance().timeInMillis
+        var startOfPeriod = closestDateFullWeekGoingBack(amountOfDataInDays)
 
-            // Loop 1 establishes the time bounds for each week
-            var index = 0
-            while (startOfPeriod <= now) {
-                timePeriod[index] = startOfPeriod
-                startOfPeriod += amountOfDataInMilliseconds
-                index += 1
-                Log.i(TAG, "index: ${index}, startOfPeriod: ${startOfPeriod}, endOfPeriod: $now")
-            }
-
-            // Loop 2 finds all expenses in each time bound and adds them to total and expenses
-            partialExpensesHistory.value?.forEach {
-                val i = (timePeriod.binarySearch(it.epochDate) + 2) * -1
-                totalInPeriodPerCategory[i][it.category] += it.cost
-                expensesInPeriod[i].add(SingleExpenseSummary(it.epochDate, it.vendor, it.cost, ExpenseCategory.values()[it.category]))
-            }
+        // Loop 1 establishes the time bounds for each week
+        var index = 0
+        while (startOfPeriod <= now) {
+            timePeriod[index] = startOfPeriod
+            startOfPeriod += amountOfDataInMilliseconds
+            index += 1
+//                Log.i(TAG, "index: ${index}, startOfPeriod: ${startOfPeriod}, endOfPeriod: $now")
         }
 
-        return TrendChartBuilderValue(timePeriod, totalInPeriodPerCategory, expensesInPeriod)
+        // Loop 2 finds all expenses in each time bound and adds them to total and expenses
+        partialExpensesHistory.value?.forEach {
+            val i = (timePeriod.binarySearch(it.epochDate) + 2) * -1
+            totalInPeriodPerCategory[i][it.category] += it.cost
+            totalInPeriod[i] += it.cost
+            expensesInPeriod[i].add(SingleExpenseSummary(it.epochDate, it.vendor, it.cost, ExpenseCategory.values()[it.category]))
+        }
+
+        timePeriod.forEachIndexed { index, period ->
+            if (period > 0) {
+                results.add(TrendChartBuilderValue(period, totalInPeriodPerCategory[index], totalInPeriod[index], expensesInPeriod[index]))
+                Log.i(TAG, "period: ${period}, totalPerCategory: ${totalInPeriodPerCategory[index]}, totalInPeriod: ${totalInPeriod[index]}, expenses: ${expensesInPeriod[index]}")
+            }
+        }
+        return results
     }
 
     /**

@@ -70,7 +70,9 @@ class ChartViewFragment: Fragment() {
         categoryReportHeader = ui.findViewById(R.id.report_header)
         categoryReportView = ui.findViewById(R.id.report_summary)
         onDateSelectedSetText(viewModel.startDate.value!!, viewModel.endDate.value!!)
-        categoryReportHeader.text = "All Categories"
+        val underlineText = SpannableString("All Categories")
+        underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
+        categoryReportHeader.text = underlineText
         if (savedInstanceState != null) {
             val savedString = savedInstanceState.getString(CATEGORY_SELECTED_KEY)
             if (savedString != null) categoryReportHeader.text = savedString
@@ -98,8 +100,11 @@ class ChartViewFragment: Fragment() {
         }
         // If category changes, update only the report (recycler view)
         viewModel.pieChartSelectedCategory.observe(viewLifecycleOwner) {
-            if (it == null) categoryReportHeader.text = "All"
-            else categoryReportHeader.text = it.displayValue
+            var displayText = it?.displayValue ?: "All Categories"
+            val underlineText = SpannableString(displayText)
+            underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
+            categoryReportHeader.text = underlineText
+
             val expenseReport = viewModel.getSingleExpenseCategorySummaryBetween(viewModel.startDate.value!!, viewModel.endDate.value!!, it)
             buildReportSummary(expenseReport)
         }
