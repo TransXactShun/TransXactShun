@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onLoginClick(view: View) {
+
         var email = emailEditText.text.toString()
         var password = passwordEditText.text.toString()
         // Firebase login procedure
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             ).show()
         } else {
             // continue login
-            // Refernce taken from: https://firebase.google.com/docs/auth/android/start
+            // Reference taken from: https://firebase.google.com/docs/auth/android/start
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -64,8 +65,6 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
-
-
         }
     }
 

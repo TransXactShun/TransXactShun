@@ -16,8 +16,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
-
-    // firebase auth var
+    // Firebase authentication
     private lateinit var auth: FirebaseAuth
 
     // firebase db var
@@ -172,7 +171,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun onBackClick(view: View) {
-        // close activity
+        // Close activity
         this.finish()
     }
 }
