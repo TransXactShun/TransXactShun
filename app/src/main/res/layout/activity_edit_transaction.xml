@@ -117,4 +117,30 @@
             android:layout_height="wrap_content"
             android:autofillHints="Enter the date here"/>
     </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/saveTransactionEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:ems="10" />
+        <Button
+            android:id="@+id/cancelTransactionEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:ems="10" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/deleteTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Transaction"
+            android:ems="10" />
+    </TableRow>
 </TableLayout>
