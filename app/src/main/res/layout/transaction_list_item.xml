@@ -1,6 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/itemPrice"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="75sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/paymentMethodLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemName"
+        android:text="Paid using "/>
+    <TextView
+        android:id="@+id/paymentMethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/paymentMethodLabel"
+        app:layout_constraintEnd_toStartOf="@+id/itemPrice"
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
+    <TextView
+        android:id="@+id/itemCategoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentMethod"
+        android:text="Category: "/>
+    <TextView
+        android:id="@+id/itemCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/itemCategoryLabel"
+        app:layout_constraintEnd_toStartOf="@+id/itemPrice"
+        app:layout_constraintTop_toBottomOf="@+id/paymentMethod" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/purchaseLocationLabel"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/itemCategory"-->
+<!--        android:text="Location: "/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/purchaseLocation"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/purchaseLocationLabel"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/itemPrice"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/itemCategory"/>-->
+
+    <TextView
+        android:id="@+id/purchaseNotesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemCategory"
+        android:text="Notes: "/>
+    <TextView
+        android:id="@+id/purchaseNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="start"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toEndOf="@+id/purchaseNotesLabel"
+        app:layout_constraintEnd_toStartOf="@+id/itemPrice"
+        app:layout_constraintTop_toBottomOf="@+id/itemCategory" />
+
+    <TextView
+        android:id="@+id/purchaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/itemPrice"
+        app:layout_constraintTop_toBottomOf="@+id/purchaseNotes" />
 </androidx.constraintlayout.widget.ConstraintLayout>
