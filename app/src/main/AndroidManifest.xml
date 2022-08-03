@@ -52,9 +52,6 @@
         </activity>
         <activity android:name=".visualization.VisualizationActivity" />
         <activity
-            android:name=".transactions.TransactionHistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".transactions.AddTransactionActivity"
             android:exported="false" />
         <activity android:name=".transactions.EditTransactionActivity"
