@@ -6,6 +6,6 @@ import androidx.lifecycle.ViewModel
 
 class BillViewModel : ViewModel() {
 
-    var reminderListLiveData = MutableLiveData<List<BillEntry>>()
+    var reminderListLiveData = MutableLiveData<List<BillEntryWithId>>()
 
 }

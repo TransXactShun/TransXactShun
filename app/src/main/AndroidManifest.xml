@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TransXactShun">
         <activity
+            android:name=".bills.DeleteReminderActivity"
+            android:exported="false" />
+        <activity
             android:name=".bills.AddBillReminderActivity"
             android:exported="false" />
         <activity

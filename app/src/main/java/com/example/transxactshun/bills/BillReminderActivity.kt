@@ -28,7 +28,7 @@ class BillReminderActivity : AppCompatActivity() {
     // vars for reminder list
     private lateinit var reminderListView: ListView
     private lateinit var billListAdapter: BillListAdapter
-    private lateinit var billArrayList: ArrayList<BillEntry>
+    private lateinit var billArrayList: ArrayList<BillEntryWithId>
 
     // Store user UID
     private lateinit var userUID: String
@@ -69,10 +69,18 @@ class BillReminderActivity : AppCompatActivity() {
 
             remindersListQuery.addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    println("onChildAdded:" + snapshot.key!!)
 
+                    val idString: String = snapshot.key!!
                     // A new comment has been added, add it to the displayed list
-                    val billEntryData = snapshot.getValue<BillEntry>()
+                    val billEntryRaw = snapshot.getValue<BillEntry>()
+
+                    val billEntryData = BillEntryWithId(
+                        idString,
+                        billEntryRaw?.payeeName,
+                        billEntryRaw?.memo,
+                        billEntryRaw?.amount,
+                        billEntryRaw?.reminderDate
+                    )
 
                     // add entry to list
                     if (billEntryData != null) {
@@ -109,6 +117,22 @@ class BillReminderActivity : AppCompatActivity() {
             billListAdapter.replace(it)
             billListAdapter.notifyDataSetChanged()
         })
+
+        // list click listener
+        reminderListView.setOnItemClickListener { parent, view, position, id ->
+            val selectedReminderEntry: BillEntryWithId =
+                billListAdapter.getItem(position) as BillEntryWithId
+
+            println("debug: $selectedReminderEntry")
+
+            val deleteEntryIntent = Intent(this, DeleteReminderActivity::class.java)
+            deleteEntryIntent.putExtra("USER_UID", userUID)
+            deleteEntryIntent.putExtra("REMINDER_UID", selectedReminderEntry.id)
+            deleteEntryIntent.putExtra("PAYEE", selectedReminderEntry.payeeName)
+            startActivity(deleteEntryIntent)
+            this.finish()
+
+        }
 
 
     }

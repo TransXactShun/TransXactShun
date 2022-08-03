@@ -11,7 +11,7 @@ import java.util.*
 
 class BillListAdapter(
     private val context: Context,
-    private var reminderList: List<BillEntry>
+    private var reminderList: List<BillEntryWithId>
 ) : BaseAdapter() {
     override fun getCount(): Int {
         return reminderList.size
@@ -28,7 +28,7 @@ class BillListAdapter(
     override fun getView(position: Int, p1: View?, p2: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.reminder_list_adapter, null)
 
-        var billObject: BillEntry = reminderList[position]
+        var billObject: BillEntryWithId = reminderList[position]
 
         // setup UI elements
         var payeeNameTextView: TextView = view.findViewById(R.id.textViewReminderName)
@@ -54,7 +54,7 @@ class BillListAdapter(
         return view
     }
 
-    fun replace(updatedBillList: List<BillEntry>) {
+    fun replace(updatedBillList: List<BillEntryWithId>) {
         reminderList = updatedBillList
     }
 
