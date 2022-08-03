@@ -18,17 +18,25 @@
             android:exported="false" />
         <activity
             android:name="com.example.transxactshun.MainActivity"
-            android:exported="true">
+            android:exported="false">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+<!--        <activity android:name=".visualization.VisualizationActivity"/>-->
+        <activity android:name=".transactions.TransactionHistoryActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".visualization.VisualizationActivity"/>-->
-        <activity android:name=".transactions.TransactionHistoryActivity"
-            android:exported="false" />
         <activity android:name=".transactions.AddTransactionActivity"
+            android:exported="false" />
+        <activity android:name=".transactions.EditTransactionActivity"
             android:exported="false" />
     </application>
 
