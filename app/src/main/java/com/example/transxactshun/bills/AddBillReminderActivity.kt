@@ -1,7 +1,10 @@
 package com.example.transxactshun.bills
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -39,6 +42,8 @@ class AddBillReminderActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
     // firebase db var
     private lateinit var database: DatabaseReference
 
+    private lateinit var appContext: Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bill_reminder)
@@ -59,6 +64,7 @@ class AddBillReminderActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         // Initialize Firebase DB
         database = Firebase.database.reference
 
+        appContext = this.applicationContext
 
         //init view model
         addReminderViewModel = ViewModelProvider(this).get(AddReminderViewModel::class.java)
@@ -148,9 +154,38 @@ class AddBillReminderActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
                 .show()
         }
 
+        try {
+            createReminderUsingAlarm()
+        } catch (ex: Exception) {
+            println("debug: $ex")
+            Toast.makeText(
+                this,
+                "Unable to create notification alert!",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
 
         // close activity
         this.finish()
+    }
+
+    private fun createReminderUsingAlarm() {
+        val alarmIntent = Intent(appContext, BillReminderService::class.java)
+        val alarmManager: AlarmManager = appContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        val pendingIntent =
+            PendingIntent.getService(
+                appContext,
+                0,
+                alarmIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            addReminderViewModel.remindOn!!.timeInMillis,
+            pendingIntent
+        )
     }
 
     private fun returnToLoginScreen() {
