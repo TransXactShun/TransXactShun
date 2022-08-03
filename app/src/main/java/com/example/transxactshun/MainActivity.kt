@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onLoginClick(view: View) {
-        openMainMenu() // TODO: Note from Jason. Uncomment this line and comment out code below to skip login
 
         var email = emailEditText.text.toString()
         var password = passwordEditText.text.toString()
@@ -53,8 +52,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             // continue login
             // Reference taken from: https://firebase.google.com/docs/auth/android/start
-
-
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
