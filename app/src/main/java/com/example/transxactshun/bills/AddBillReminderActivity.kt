@@ -171,6 +171,7 @@ class AddBillReminderActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
     }
 
     private fun createReminderUsingAlarm() {
+        // Reference taken from official documentation: https://developer.android.com/training/scheduling/alarms#inexact
         val alarmIntent = Intent(appContext, BillReminderService::class.java)
         val alarmManager: AlarmManager = appContext.getSystemService(ALARM_SERVICE) as AlarmManager
         val pendingIntent =
