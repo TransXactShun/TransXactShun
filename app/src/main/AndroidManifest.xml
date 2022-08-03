@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.transxactshun">
 
-<!--    TODO: Add app icons-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TransXactShun">
+        <service
+            android:name=".bills.BillReminderService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".bills.DeleteReminderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.AddBillReminderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.BudgetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.BillReminderActivity"
+            android:exported="false" />
         <activity
             android:name=".menu.MainMenuActivity"
             android:exported="false" />
@@ -34,7 +50,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".transactions.AddTransactionActivity"
+        <activity android:name=".visualization.VisualizationActivity" />
+        <activity
+            android:name=".transactions.TransactionHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transactions.AddTransactionActivity"
             android:exported="false" />
         <activity android:name=".transactions.EditTransactionActivity"
             android:exported="false" />

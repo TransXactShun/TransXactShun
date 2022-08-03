@@ -11,6 +11,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.transxactshun.MainActivity
 import com.example.transxactshun.R
+import com.example.transxactshun.bills.BillReminderActivity
+import com.example.transxactshun.bills.BudgetActivity
+import com.example.transxactshun.transactions.TransactionHistoryActivity
 import com.example.transxactshun.visualization.VisualizationActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -61,13 +64,7 @@ class MainMenuActivity : AppCompatActivity() {
                 4 -> openShareReceiptsActivity()
             }
         }
-//        btnTransactions = findViewById(R.id.btn_transactions)
-//        btnVisualization.setOnClickListener {
-//            val intent = Intent(applicationContext, VisualizationActivity::class.java).apply {
-//                // nothing for now
-//            }
-//            startActivity(intent)
-//        }
+
     }
 
 
@@ -91,6 +88,11 @@ class MainMenuActivity : AppCompatActivity() {
 
     private fun openTransactionActivity() {
 
+        val intent = Intent(applicationContext, TransactionHistoryActivity::class.java).apply {
+            // nothing for now
+        }
+        startActivity(intent)
+
     }
 
     private fun openGraphActivity() {
@@ -101,11 +103,13 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     private fun openBillReminderActivity() {
-
+        val intent = Intent(applicationContext, BillReminderActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openBudgetActivity() {
-
+        val intent = Intent(applicationContext, BudgetActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openShareReceiptsActivity() {
