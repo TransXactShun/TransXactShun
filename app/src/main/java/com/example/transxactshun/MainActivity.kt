@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onLoginClick(view: View) {
-//        openMainMenu() // TODO: Note from Jason. Uncomment this line and comment out code below to skip login
+        openMainMenu() // TODO: Note from Jason. Uncomment this line and comment out code below to skip login
 
         var email = emailEditText.text.toString()
         var password = passwordEditText.text.toString()

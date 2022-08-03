@@ -61,7 +61,7 @@ class MainMenuActivity : AppCompatActivity() {
                 4 -> openShareReceiptsActivity()
             }
         }
-        btnTransactions = findViewById(R.id.btn_transactions)
+//        btnTransactions = findViewById(R.id.btn_transactions)
 //        btnVisualization.setOnClickListener {
 //            val intent = Intent(applicationContext, VisualizationActivity::class.java).apply {
 //                // nothing for now
