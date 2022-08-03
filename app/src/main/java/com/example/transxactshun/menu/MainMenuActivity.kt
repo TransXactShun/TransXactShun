@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.transxactshun.MainActivity
 import com.example.transxactshun.R
+import com.example.transxactshun.bills.BillReminderActivity
+import com.example.transxactshun.bills.BudgetActivity
 import com.example.transxactshun.transactions.TransactionHistoryActivity
 import com.example.transxactshun.visualization.VisualizationActivity
 import com.google.firebase.auth.ktx.auth
@@ -101,11 +103,13 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     private fun openBillReminderActivity() {
-
+        val intent = Intent(applicationContext, BillReminderActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openBudgetActivity() {
-
+        val intent = Intent(applicationContext, BudgetActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openShareReceiptsActivity() {

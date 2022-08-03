@@ -9,6 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TransXactShun">
+        <service
+            android:name=".bills.BillReminderService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".bills.DeleteReminderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.AddBillReminderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.BudgetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bills.BillReminderActivity"
+            android:exported="false" />
         <activity
             android:name=".menu.MainMenuActivity"
             android:exported="false" />
