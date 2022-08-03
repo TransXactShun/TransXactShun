@@ -1,77 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".transactions.AddTransactionActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".transactions.AddTransactionActivity">
+
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Item name: "
-                android:ems="7" />
+                android:ems="7"
+                android:text="Item Name: " />
+
             <EditText
                 android:id="@+id/addItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="Enter the item name here"
-                android:ems="10"/>
+                android:ems="10"
+                android:hint="Enter the item name here" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: "
-                android:ems="7" />
+                android:ems="7"
+                android:text="Price (in cents): " />
+
             <EditText
                 android:id="@+id/addItemPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="Enter the price here"/>
+                android:hint="Enter the price here"
+                android:inputType="number"
+                android:maxLength="9" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldPaymentMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Payment method: "
-                android:ems="7" />
-            <EditText
-                android:id="@+id/addPaymentMethod"
+                android:ems="7"
+                android:text="Payment method: " />
+
+            <Spinner
+                android:id="@+id/spinnerPaymentMethod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="Enter the payment method here"/>
+                android:layout_height="wrap_content" />
+
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldItemCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Item category: "
-                android:ems="7" />
-            <EditText
-                android:id="@+id/addItemCategory"
+                android:ems="7"
+                android:text="Item category: " />
+
+            <Spinner
+                android:id="@+id/spinnerItemCategoryMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="Enter the item category here"/>
+                />
         </TableRow>
 
         <!--    <TableRow-->
@@ -92,53 +108,62 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldPurchaseNotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notes: "
-                android:ems="7" />
+                android:ems="7"
+                android:text="Notes: " />
+
             <EditText
                 android:id="@+id/addPurchaseNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="Enter purchase notes here"/>
+                android:hint="Enter purchase notes here" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/fieldPurchaseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: "
-                android:ems="7" />
-            <EditText
-                android:id="@+id/addPurchaseDate"
-                android:layout_width="match_parent"
+                android:ems="7"
+                android:text="Date: " />
+
+
+            <Button
+                android:id="@+id/buttonSelectDateTransaction"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autofillHints="Enter the date here"/>
+                android:onClick="onClickDateTransaction"
+                android:text="Select Date" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/cancel_new_transaction"
-                android:text="Cancel"
-                />
-    <!--            android:onClick="onSaveNewTransaction"-->
-            <Button
+                android:id="@+id/save_new_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/save_new_transaction"
-                android:text="Save"
-                />
-    <!--            android:onClick="onCancelNewTransaction"-->
+                android:text="Save" />
+
+            <Button
+                android:id="@+id/cancel_new_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Cancel" />
+
         </TableRow>
     </TableLayout>
-</LinearLayout>
+</ScrollView>
