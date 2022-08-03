@@ -3,8 +3,13 @@ package com.example.transxactshun.transactions
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.transxactshun.R
+import com.example.transxactshun.database.ExpensesDatabase
+import com.example.transxactshun.database.ExpensesDatabaseDao
+import com.example.transxactshun.database.ExpensesDatabaseEntry
+import com.example.transxactshun.database.ExpensesRepository
 
 class AddTransactionActivity : AppCompatActivity() {
     private lateinit var saveNewTransactionBtn: Button
@@ -16,6 +21,10 @@ class AddTransactionActivity : AppCompatActivity() {
 //    private lateinit var purchaseLocationEditText: EditText
     private lateinit var purchaseNotesEditText: EditText
     private lateinit var purchaseDateEditText: EditText
+
+    private lateinit var database: ExpensesDatabase
+    private lateinit var databaseDao: ExpensesDatabaseDao
+    private lateinit var repository: ExpensesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +41,51 @@ class AddTransactionActivity : AppCompatActivity() {
         itemCategoryEditText = findViewById(R.id.addItemCategory)
         purchaseNotesEditText = findViewById(R.id.addPurchaseNotes)
         purchaseDateEditText = findViewById(R.id.addPurchaseDate)
+
+        // Set up database
+        database = ExpensesDatabase.getInstance(this)
+        databaseDao = database.expensesDatabaseDao
+        repository = ExpensesRepository(databaseDao)
+
+        // Prepare data
+        val price = itemPriceEditText.text.toString().toInt()
+        val paymentMethod = paymentMethodEditText.text.toString().toInt()
+        val itemCategories = itemCategoryEditText.text.toString().toInt()
+        val notes = purchaseNotesEditText.text.toString()
+        val theDate = purchaseDateEditText.text.toString().toLong()
+
+        saveNewTransactionBtn.setOnClickListener {
+            // Creating the expense data object
+            val expensesObj = ExpensesDatabaseEntry(email = "test@abc.com",
+                                                    category = itemCategories,
+                                                    note = notes,
+                                                    paymentType = paymentMethod,
+                                                    vendor = "testing",
+                                                    items = "test".toByteArray())
+            expensesObj.cost = price
+            expensesObj.epochDate = theDate
+
+            // insert data object into the database
+            repository.insert(expensesObj)
+
+            Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
+
+            finish()
+        }
+
+        cancelNewTransactionBtn.setOnClickListener {
+            finish()
+        }
     }
 
-    fun onSaveNewTransaction(): Int {
-        // TODO: Not yet implemented
-        println("TRACE: Save clicked")
-
-        return 0
-    }
-
-    fun onCancelNewTransaction(): Int {
-        // TODO: Not yet implemented
-        println("TRACE: Cancel clicked")
-        return 0
-    }
+//    fun onSaveNewTransaction(): Int {
+//        // TODO: Not yet implemented
+//        println("TRACE: Save clicked")
+//
+//        return 0
+//    }
+//
+//    fun onCancelNewTransaction() {
+//        finish()
+//    }
 }
