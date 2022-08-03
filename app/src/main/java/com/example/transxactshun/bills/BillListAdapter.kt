@@ -37,9 +37,9 @@ class BillListAdapter(
         var dateTextView: TextView = view.findViewById(R.id.textViewReminderDate)
 
         // set values
-        payeeNameTextView.text = billObject.payeeName
-        amountTextView.text = billObject.amount.toString()
-        memoTextView.text = billObject.memo
+        payeeNameTextView.text = "Payee: ${billObject.payeeName}"
+        amountTextView.text = "Amount: $ ${billObject.amount.toString()}"
+        memoTextView.text = "Memo: ${billObject.memo}"
         val dateValue = billObject.reminderDate
         var calendar: Calendar = Calendar.getInstance()
         if (dateValue != null) {
@@ -49,8 +49,13 @@ class BillListAdapter(
             calendar.time
         )
 
-        dateTextView.text = dateFormat
+        dateTextView.text = "Remind On: ${dateFormat}"
 
         return view
     }
+
+    fun replace(updatedBillList: List<BillEntry>) {
+        reminderList = updatedBillList
+    }
+
 }
