@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".transactions.EditTransactionActivity">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item name: "
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter the item name here"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price: "
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter the price here"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldPaymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment method"
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter the payment method here"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldItemCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item category: "
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editItemCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter the item category here"/>
+    </TableRow>
+
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <TextView-->
+<!--            android:id="@+id/fieldPurchaseLocation"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" -->
+<!--            android:text="Purchase location: " -->
+<!--            android:ems="10" />-->
+<!--        <EditText-->
+<!--            android:id="@+id/editPurchaseLocation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:autofillHints="Enter the purchase location here"/>-->
+<!--    </TableRow>-->
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldPurchaseNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes: "
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editPurchaseNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter purchase notes here"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/fieldPurchaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:ems="10" />
+        <EditText
+            android:id="@+id/editPurchaseDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Enter the date here"/>
+    </TableRow>
+</TableLayout>

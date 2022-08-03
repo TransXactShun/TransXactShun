@@ -3,4 +3,22 @@
     <string name="btn_daily">Daily</string>
     <string name="btn_weekly">Weekly</string>
     <string name="btn_monthly">Monthly</string>
+    <string name="email_login_screen">Email:</string>
+    <string name="email_address_login_screen">Email address...</string>
+    <string name="password_login_screen">Password:</string>
+    <string name="password_hint_login_screen">Password...</string>
+    <string name="login_button_login_screen">LOGIN</string>
+    <string name="register_button__login_screen">REGISTER</string>
+    <string name="display_name_registration_page">Display Name</string>
+    <string name="name_hint__registration_page">Name</string>
+    <string name="email_address_registration_page">Email Address</string>
+    <string name="email_hint_registration_page">Email</string>
+    <string name="password_min_7_characters_registration_page">Password (min. 7 characters)</string>
+    <string name="password_hint_registration_page">Password</string>
+    <string name="confirm_password_registration_page">Confirm Password</string>
+    <string name="confirm_password_hint_registration_page">Confirm Password</string>
+    <string name="phone_number_10_digits_only_registration_page">Phone number (10 digits only)</string>
+    <string name="phone_number_hint_registration_page">Phone Number</string>
+    <string name="register_registration_page">REGISTER</string>
+    <string name="back_registration_page">BACK</string>
 </resources>
