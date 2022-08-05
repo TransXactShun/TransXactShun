@@ -19,6 +19,24 @@ class ExpensesRepository(private val expensesDatabaseDao: ExpensesDatabaseDao) {
     }
 
     /**
+     * Updates a single entry in the database
+     * @param entry - A ExpensesDatabaseEntry object with the updated information
+     */
+    fun adjustEntry(entry: ExpensesDatabaseEntry) {
+        CoroutineScope(IO).launch {
+            expensesDatabaseDao.adjustEntry(
+                entry.id,
+                entry.cost,
+                entry.items,
+                entry.epochDate,
+                entry.paymentType,
+                entry.note,
+                entry.category
+            )
+        }
+    }
+
+    /**
      * Query the database for results from a specific date
      * @param startDate - the earliest date that results should contain. Value is in milliseconds (epoch)
      * @return a list of results that meet the requirement

@@ -9,39 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.transxactshun.R
 import com.example.transxactshun.bills.AddReminderViewModel
-import com.example.transxactshun.database.ExpensesDatabase
-import com.example.transxactshun.database.ExpensesDatabaseDao
-import com.example.transxactshun.database.ExpensesDatabaseEntry
-import com.example.transxactshun.database.ExpensesRepository
+import com.example.transxactshun.database.*
 import java.util.*
 
 class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
-
-    enum class AddPaymentType(val string: String) {
-        CASH("Cash"),
-        DEBIT("Debit"),
-        CREDIT("Credit"),
-        CHEQUE("Cheque"),
-        GIFT("Gift Card/Certificate")
-    }
-
-    enum class AddExpenseCategory(val string: String) {
-        GROCERY("Grocery"),
-        RESTAURANTS("Restaurants"),
-        ENTERTAINMENT("Entertainment"),
-        TRAVEL("Travel"),
-        RECURRING("Recurring Bill Payments"),
-        PERSONAL("Personal"),
-        TECHNOLOGY("Technology"),
-        TRANSPORTATION("Transportation"),
-        MEDICAL("Medical"),
-        HOME("Home"),
-        EDUCATION("Education"),
-        CONSTRUCTION("Construction"),
-        OFFICE("Office"),
-        FINANCIAL("Financial"),
-        OTHER("Other")
-    }
 
     private lateinit var saveNewTransactionBtn: Button
     private lateinit var cancelNewTransactionBtn: Button
@@ -88,16 +59,16 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         spinnerCategoryType = findViewById(R.id.spinnerItemCategoryMethod)
 
         // add data to spinner
-        spinnerPaymentType.adapter = ArrayAdapter<AddPaymentType>(
+        spinnerPaymentType.adapter = ArrayAdapter<PaymentType>(
             this,
             android.R.layout.simple_list_item_1,
-            AddPaymentType.values()
+            PaymentType.values()
         )
 
-        spinnerCategoryType.adapter = ArrayAdapter<AddExpenseCategory>(
+        spinnerCategoryType.adapter = ArrayAdapter<ExpenseCategory>(
             this,
             android.R.layout.simple_list_item_1,
-            AddExpenseCategory.values()
+            ExpenseCategory.values()
         )
 
 
@@ -133,7 +104,7 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                     epochDate = theDate,
                     cost = price,
                     vendor = "testing",
-                    items = "test".toByteArray()
+                    items = "test"
                 )
 
                 println("debug: $expensesObj")

@@ -3,6 +3,7 @@ package com.example.transxactshun.visualization
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -27,7 +28,7 @@ object VisualizationUtil {
      * @param ms - a date in milliseconds (epoch time)
      */
     fun millisecondsToDateFormat(ms: Long): String {
-        val unformattedDate = Instant.ofEpochMilli(ms).atZone(ZoneOffset.UTC).toLocalDate()
+        val unformattedDate = Instant.ofEpochMilli(ms).atZone(ZoneId.of("America/Los_Angeles")).toLocalDate()
         val dateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd, yyyy", Locale.CANADA)
         return dateFormatter.format(unformattedDate)
     }
