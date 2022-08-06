@@ -28,7 +28,7 @@ object VisualizationUtil {
      * @param ms - a date in milliseconds (epoch time)
      */
     fun millisecondsToDateFormat(ms: Long): String {
-        val unformattedDate = Instant.ofEpochMilli(ms).atZone(ZoneId.of("America/Los_Angeles")).toLocalDate()
+        val unformattedDate = Instant.ofEpochMilli(ms).atZone(ZoneOffset.UTC).toLocalDate()
         val dateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd, yyyy", Locale.CANADA)
         return dateFormatter.format(unformattedDate)
     }
