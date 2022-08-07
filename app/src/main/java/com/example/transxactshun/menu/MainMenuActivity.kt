@@ -61,7 +61,6 @@ class MainMenuActivity : AppCompatActivity() {
                 1 -> openGraphActivity()
                 2 -> openBillReminderActivity()
                 3 -> openBudgetActivity()
-                4 -> openShareReceiptsActivity()
             }
         }
 
@@ -112,7 +111,4 @@ class MainMenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun openShareReceiptsActivity() {
-
-    }
 }
