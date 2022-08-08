@@ -5,15 +5,28 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-enum class PaymentType(val string: String) {
+enum class PaymentType(val displayText: String) {
     CASH("Cash"),
     DEBIT("Debit"),
     CREDIT("Credit"),
     CHEQUE("Cheque"),
-    GIFT("Gift Card/Certificate"),
+    GIFT("Gift Card");
+
+    companion object {
+        fun getPaymentTypeFrom(value: String): PaymentType {
+            return when (value) {
+                "Cash" -> CASH
+                "Debit" -> DEBIT
+                "Credit" -> CREDIT
+                "Cheque" -> CHEQUE
+                "Gift Card" -> GIFT
+                else -> CASH
+            }
+        }
+    }
 }
 
-enum class ExpenseCategory(val displayValue: String) {
+enum class ExpenseCategory(val displayText: String) {
     GROCERY("Grocery"),
     RESTAURANTS("Restaurants"),
     ENTERTAINMENT("Entertainment"),
@@ -54,9 +67,10 @@ enum class ExpenseCategory(val displayValue: String) {
     }
 }
 
-@Database(entities = [ExpensesDatabaseEntry::class], version = 2)
-abstract class ExpensesDatabase: RoomDatabase() {
+@Database(entities = [ExpensesDatabaseEntry::class], version = 3)
+abstract class ExpensesDatabase : RoomDatabase() {
     abstract val expensesDatabaseDao: ExpensesDatabaseDao
+
     companion object {
         const val EXPENSES_TABLE_NAME = "TransXactShun_Table"
 
@@ -66,7 +80,11 @@ abstract class ExpensesDatabase: RoomDatabase() {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, ExpensesDatabase::class.java, EXPENSES_TABLE_NAME).fallbackToDestructiveMigration().build()
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        ExpensesDatabase::class.java,
+                        EXPENSES_TABLE_NAME
+                    ).fallbackToDestructiveMigration().allowMainThreadQueries().build()
                     INSTANCE = instance
                 }
                 return instance

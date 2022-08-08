@@ -4,19 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/gradient_background.xml" value="0.2015" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/icon_construction.xml" value="0.335" />
+        <entry key="app/src/main/res/drawable/rectangle_empty.xml" value="0.2055" />
         <entry key="app/src/main/res/layout/activity_add_bill_reminder.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/layout/activity_add_transaction.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_bill_reminder.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_budget.xml" value="0.22708333333333333" />
         <entry key="app/src/main/res/layout/activity_delete_reminder.xml" value="0.21302083333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.16" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_add_transaction.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_edit_transaction.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_transaction_history.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/graph_piechart_layout.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/menu_adapter.xml" value="0.19479166666666667" />
+        <entry key="app/src/main/res/layout/reminder_list_adapter.xml" value="0.22604166666666667" />
         <entry key="app/src/main/res/layout/transaction_item_category.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/transaction_item_layout.xml" value="0.8830645161290323" />
         <entry key="app/src/main/res/layout/transaction_item_name.xml" value="0.18489583333333334" />
@@ -28,14 +31,8 @@
         <entry key="app/src/main/res/layout/transaction_purchase_location.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/transaction_purchase_method.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/transaction_purchase_notes.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.2055" />
-        <entry key="app/src/main/res/drawable/icon_construction.xml" value="0.335" />
-        <entry key="app/src/main/res/drawable/rectangle_empty.xml" value="0.2055" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.32083333333333336" />
-        <entry key="app/src/main/res/layout/graph_piechart_layout.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/menu_adapter.xml" value="0.19479166666666667" />
-        <entry key="app/src/main/res/layout/reminder_list_adapter.xml" value="0.22604166666666667" />
         <entry key="app/src/main/res/layout/visualization_main_layout.xml" value="0.5625" />
+        <entry key="app/src/main/res/layout/visualization_piechart_layout.xml" value="0.2223731884057971" />
         <entry key="app/src/main/res/menu/visualization_switch_mode_actionbar_button.xml" value="0.5625" />
         <entry key="app/src/main/res/menu/visualization_switch_to_calendar_actionbar_button.xml" value="0.5625" />
         <entry key="app/src/main/res/menu/visualization_switch_to_graph_actionbar_button.xml" value="0.5635416666666667" />

@@ -16,3 +16,9 @@ File: bills -> BillReminderService
 Reference taken for displaying notifications from Lecture 13: BindDemoKotlin
 Link: https://www.sfu.ca/~xingdong/Teaching/CMPT362/code/Kotlin_code/BindDemoKotlin.zip
 modified according to use case
+
+Util library referenced from Lecture 2 CameraDemoKotlin app
+Link: https://www.sfu.ca/~xingdong/Teaching/CMPT362/code/Kotlin_code/CameraDemoKotlin.zip
+Modifications were made to include Send SMS
+
+App Logo created using https://www.adobe.com/express/create/logo

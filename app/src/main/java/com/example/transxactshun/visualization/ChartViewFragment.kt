@@ -28,9 +28,6 @@ import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import lecho.lib.hellocharts.util.ChartUtils
 import lecho.lib.hellocharts.view.PieChartView
-import java.time.*
-import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ChartViewFragment: Fragment() {
@@ -100,7 +97,7 @@ class ChartViewFragment: Fragment() {
         }
         // If category changes, update only the report (recycler view)
         viewModel.pieChartSelectedCategory.observe(viewLifecycleOwner) {
-            var displayText = it?.displayValue ?: "All Categories"
+            var displayText = it?.displayText ?: "All Categories"
             val underlineText = SpannableString(displayText)
             underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)
             categoryReportHeader.text = underlineText
@@ -144,7 +141,7 @@ class ChartViewFragment: Fragment() {
             val pieChartSlices = ArrayList<SliceValue>()
             categoryExpenseMap.forEach {
                 val categorySlice = SliceValue((it.value).toFloat(), getCategoryColour(it.key))
-                val categoryString = it.key.displayValue
+                val categoryString = it.key.displayText
                 val categoryCost = VisualizationUtil.currencyFormat(it.value)
                 val categoryLabel = "${categoryString}: $categoryCost"
                 categorySlice.setLabel(categoryLabel)

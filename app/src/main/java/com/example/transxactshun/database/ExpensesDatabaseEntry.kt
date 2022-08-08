@@ -16,8 +16,8 @@ data class ExpensesDatabaseEntry(
     // In cents
     var cost: Int = 0,
 
-    @ColumnInfo(name="items", typeAffinity = ColumnInfo.BLOB)
-    var items: ByteArray,
+    @ColumnInfo(name="items", typeAffinity = ColumnInfo.TEXT)
+    var items: String,
 
     @ColumnInfo(name="date", typeAffinity = ColumnInfo.INTEGER)
     // In milliseconds
@@ -60,7 +60,7 @@ data class ExpensesDatabaseEntry(
         var result = id.hashCode()
         result = 31 * result + email.hashCode()
         result = 31 * result + cost
-        result = 31 * result + items.contentHashCode()
+        result = 31 * result + items.hashCode()
         result = 31 * result + epochDate.hashCode()
         result = 31 * result + paymentType
         result = 31 * result + note.hashCode()

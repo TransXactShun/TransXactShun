@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.transxactshun.R
+import com.example.transxactshun.database.ExpenseCategory
+import com.example.transxactshun.database.ExpensesDatabaseEntry
+import com.example.transxactshun.database.PaymentType
 
 /**
  * An adapter loads the information to be displayed from a data source,
@@ -15,7 +18,7 @@ import com.example.transxactshun.R
  *
  * Reference: https://www.raywenderlich.com/155-android-listview-tutorial-with-kotlin
  */
-class TransactionAdapter(context: Context, private val dataArray: Array<Transaction>) : BaseAdapter() {
+class TransactionAdapter(context: Context, private val dataArray: List<ExpensesDatabaseEntry>) : BaseAdapter() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     // Returns the size of the dataArray
@@ -48,16 +51,16 @@ class TransactionAdapter(context: Context, private val dataArray: Array<Transact
         val purchaseDate = rowView.findViewById(R.id.purchaseDate) as TextView
 
         // Transaction for a row
-        val transaction = getItem(position) as Transaction
+        val transaction = getItem(position) as ExpensesDatabaseEntry
 
         // Update the row's TextViews
-        itemName.text = transaction.itemName
-        itemPrice.text = transaction.itemPrice
-        paymentMethod.text = transaction.paymentMethod
+        itemName.text = transaction.items
+        itemPrice.text = TransactionUtil.currencyFormat(transaction.cost)
+        paymentMethod.text = PaymentType.values()[transaction.paymentType].displayText
 //        purchaseLocation.text = transaction.purchaseLocation
-        itemCategory.text = transaction.itemCategory
-        purchaseNotes.text = transaction.purchaseNotes
-        purchaseDate.text = transaction.purchaseDate
+        itemCategory.text = ExpenseCategory.values()[transaction.category].displayText
+        purchaseNotes.text = transaction.note
+        purchaseDate.text = TransactionUtil.millisecondsToDateTimeFormat(transaction.epochDate)
 
         return rowView
     }

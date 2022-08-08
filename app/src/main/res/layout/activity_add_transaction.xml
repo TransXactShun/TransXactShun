@@ -36,6 +36,26 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/fieldVendorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="7"
+                android:text="Vendor Name: " />
+
+            <EditText
+                android:id="@+id/addVendorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter the vendor name here" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <TextView
                 android:id="@+id/fieldItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

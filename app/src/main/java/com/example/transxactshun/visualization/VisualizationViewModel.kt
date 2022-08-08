@@ -218,7 +218,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             ExpensesDatabaseEntry(
                 cost = 1500,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658876844006,
                 paymentType = 0,
                 note = "",
@@ -229,7 +229,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             ExpensesDatabaseEntry(
                 cost = 2000,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658876844006,
                 paymentType = 0,
                 note = "",
@@ -239,7 +239,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             repository.insert(ExpensesDatabaseEntry(
                 cost = 2500,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658790444006,
                 paymentType = 0,
                 note = "",
@@ -249,7 +249,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             repository.insert(ExpensesDatabaseEntry(
                 cost = 2000,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658704044006,
                 paymentType = 0,
                 note = "",
@@ -259,7 +259,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             repository.insert(ExpensesDatabaseEntry(
                 cost = 1500,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658617644006,
                 paymentType = 0,
                 note = "",
@@ -269,7 +269,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             repository.insert(ExpensesDatabaseEntry(
                 cost = 50,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1658531244006,
                 paymentType = 0,
                 note = "",
@@ -280,7 +280,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
                 ExpensesDatabaseEntry(
                 cost = 1000,
                 email = "test",
-                items = ByteArray(0),
+                items = "Stuff",
                 epochDate = 1655638782627,
                 paymentType = 0,
                 note = "",
