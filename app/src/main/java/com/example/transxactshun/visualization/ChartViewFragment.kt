@@ -111,13 +111,13 @@ class ChartViewFragment: Fragment() {
 
         pieChart.onValueTouchListener = ChartOnTouchListener()
 
-        // These two buttons are for testing only
-        btnAdd.setOnClickListener {
-            viewModel.addFakeEntries()
-        }
-        btnDeleteAll.setOnClickListener {
-            viewModel.deleteAll()
-        }
+        // These two buttons are for testing and developement and demonstration only
+//        btnAdd.setOnClickListener {
+//            viewModel.addFakeEntries()
+//        }
+//        btnDeleteAll.setOnClickListener {
+//            viewModel.deleteAll()
+//        }
         dateRangeText.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.dateRangePicker()
             datePicker.setSelection(androidx.core.util.Pair(viewModel.startDate.value!!, viewModel.endDate.value!!))

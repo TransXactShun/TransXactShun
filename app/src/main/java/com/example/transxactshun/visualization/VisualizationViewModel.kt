@@ -210,7 +210,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
     }
 
     /**
-     * Test only
+     * Test and developement only
      */
     fun addFakeEntries() {
         CoroutineScope(IO).launch {
