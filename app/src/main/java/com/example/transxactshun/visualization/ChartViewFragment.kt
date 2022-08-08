@@ -64,8 +64,8 @@ class ChartViewFragment: Fragment() {
         val ui = inflater.inflate(R.layout.visualization_piechart_layout, container, false)
 
         pieChart = ui.findViewById(R.id.pie_chart)
-        btnAdd = ui.findViewById(R.id.btn_add)
-        btnDeleteAll = ui.findViewById(R.id.btn_delete)
+//        btnAdd = ui.findViewById(R.id.btn_add)
+//        btnDeleteAll = ui.findViewById(R.id.btn_delete)
         dateRangeText = ui.findViewById(R.id.date_range)
         categoryReportHeader = ui.findViewById(R.id.report_header)
         categoryReportView = ui.findViewById(R.id.report_summary)
