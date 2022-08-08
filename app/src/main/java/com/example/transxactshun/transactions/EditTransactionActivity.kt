@@ -37,6 +37,8 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
     private lateinit var purchaseNotesEditText: EditText
     private lateinit var purchaseDateEditText: TextView
     private lateinit var purchaseTimeEditText: TextView
+    private lateinit var purchaseDateImageView: ImageView
+    private lateinit var purchaseTimeImageView: ImageView
 
     // Buttons
     private lateinit var saveButton: Button
@@ -150,6 +152,10 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
                     )
                     datePickerDialog.show()
                 }
+                purchaseDateImageView.setOnClickListener {
+                    val datePickerDialog = DatePickerDialog(this@EditTransactionActivity, this@EditTransactionActivity, yy, mm, dd)
+                    datePickerDialog.show()
+                }
                 purchaseTimeEditText.setOnClickListener {
                     val timePickerDialog = TimePickerDialog(
                         this@EditTransactionActivity,
@@ -158,6 +164,10 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
                         min,
                         false
                     )
+                    timePickerDialog.show()
+                }
+                purchaseTimeImageView.setOnClickListener {
+                    val timePickerDialog = TimePickerDialog(this@EditTransactionActivity, this@EditTransactionActivity, hh, min, false)
                     timePickerDialog.show()
                 }
 
@@ -240,7 +250,7 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         val day = editTransactionViewModel.day.value!!
         val monthStr = if (month < 10) "0${month}" else "$month"
         val dayStr = if (day < 10) "0${day}" else "$day"
-        val hourStr = if (hourOfDay < 10) "0${hourOfDay}" else "${hourOfDay}"
+        val hourStr = if (hourOfDay < 10) "0${hourOfDay}" else "$hourOfDay"
         val minuteStr = if (minute < 10) "0${minute}" else "$minute"
         val dateString =
             "${editTransactionViewModel.year.value}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}:00"
