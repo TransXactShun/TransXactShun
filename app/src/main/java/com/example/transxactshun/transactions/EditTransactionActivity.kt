@@ -175,7 +175,29 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
             val itemNameEdit: String = itemNameEditText.text.toString()
             println("TRACE: CHECKING NAME STRING IN EDIT TEXT")
             println(itemNameEdit)
-            val itemPriceEdit: Int = (itemPriceEditText.text.toString().replace(".", "")).toInt()
+
+            val costText = itemPriceEditText.text.toString()
+            val costDelimited = costText.split(".")
+            val costAmount = if (costDelimited.size == 2) {
+                when (costDelimited[1].length) {
+                    0 -> {
+                        (costDelimited[0].toInt() * 100)
+                    }
+                    1 -> {
+                        (costText.replace(".", "")).toInt() * 10
+                    }
+                    2 -> {
+                        (costText.replace(".", "")).toInt()
+                    }
+                    else -> {
+                        val decimalPortion = costDelimited[1].slice(0..1)
+                        val newCostText = "${costDelimited[0]}$decimalPortion"
+                        newCostText.toInt()
+                    }
+                }
+            } else {
+                costText.toInt() * 100
+            }
             val paymentMethodEdit: Int = spinnerPaymentType.selectedItemPosition
             val purchaseNotesEdit: String = purchaseNotesEditText.text.toString()
             val itemCategoryEdit: Int = spinnerCategoryType.selectedItemPosition
@@ -183,7 +205,7 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
             val newEntry = ExpensesDatabaseEntry(
                 editTransactionViewModel.id.value!!,
                 "",
-                itemPriceEdit,
+                costAmount,
                 itemNameEdit,
                 editTransactionViewModel.epochDate.value!!,
                 paymentMethodEdit,
