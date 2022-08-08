@@ -47,6 +47,7 @@
             android:id="@+id/editItemPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:layout_weight="2"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
