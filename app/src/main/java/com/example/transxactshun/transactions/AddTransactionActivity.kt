@@ -2,25 +2,20 @@ package com.example.transxactshun.transactions
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
+import android.telephony.SmsManager
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.transxactshun.MainActivity
 import com.example.transxactshun.R
-import com.example.transxactshun.bills.AddReminderViewModel
 import com.example.transxactshun.database.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 
 class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -250,11 +245,46 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
     private fun sendSmsNotification() {
         try {
-            println("debug: sms triggered")
+
+            // retrieve phone number
+            databaseFirebase.child("userProfile").child(userUID).child("phoneNumber").get()
+                .addOnSuccessListener {
+                    var phoneNumber: String = ""
+                    if (it.value == null) {
+                        Toast.makeText(
+                            baseContext,
+                            "Phone number is NULL!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        phoneNumber = it.value.toString()
+
+                        val sendSmsIntent = Intent(Intent.ACTION_SENDTO)
+                        sendSmsIntent.setData(Uri.parse("smsto:" + Uri.encode(phoneNumber)))
+                        sendSmsIntent.putExtra(
+                            "sms_body",
+                            "TransXactShun: User has exceeded their monthly budget!"
+                        )
+                        //sendSmsIntent.setType("vnd.android-dir/mms-sms")
+                        startActivity(sendSmsIntent)
+
+                        Toast.makeText(
+                            baseContext,
+                            "Budget Exceeded!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }.addOnFailureListener {
+                    throw Exception()
+                }
+
+
         } catch (ex: Exception) {
+            println("debug: $ex")
             Toast.makeText(
                 baseContext,
-                "Unable to generate text notification, maybe your API account has lower balance!",
+                "Unable to generate text notification!",
                 Toast.LENGTH_SHORT
             ).show()
         }

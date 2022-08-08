@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // check and ask for permissions
+        Util.checkPermissions(this)
+
         // Initialize Firebase Auth
         auth = Firebase.auth
 
