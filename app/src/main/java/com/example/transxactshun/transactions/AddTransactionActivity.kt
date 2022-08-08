@@ -265,7 +265,6 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                             "sms_body",
                             "TransXactShun: User has exceeded their monthly budget!"
                         )
-                        //sendSmsIntent.setType("vnd.android-dir/mms-sms")
                         startActivity(sendSmsIntent)
 
                         Toast.makeText(

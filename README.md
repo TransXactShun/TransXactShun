@@ -20,3 +20,5 @@ modified according to use case
 Util library referenced from Lecture 2 CameraDemoKotlin app
 Link: https://www.sfu.ca/~xingdong/Teaching/CMPT362/code/Kotlin_code/CameraDemoKotlin.zip
 Modifications were made to include Send SMS
+
+App Logo created using https://www.adobe.com/express/create/logo
