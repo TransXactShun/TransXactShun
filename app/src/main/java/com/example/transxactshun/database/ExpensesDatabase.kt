@@ -11,6 +11,7 @@ enum class PaymentType(val displayText: String) {
     CREDIT("Credit"),
     CHEQUE("Cheque"),
     GIFT("Gift Card");
+
     companion object {
         fun getPaymentTypeFrom(value: String): PaymentType {
             return when (value) {
@@ -67,8 +68,9 @@ enum class ExpenseCategory(val displayText: String) {
 }
 
 @Database(entities = [ExpensesDatabaseEntry::class], version = 3)
-abstract class ExpensesDatabase: RoomDatabase() {
+abstract class ExpensesDatabase : RoomDatabase() {
     abstract val expensesDatabaseDao: ExpensesDatabaseDao
+
     companion object {
         const val EXPENSES_TABLE_NAME = "TransXactShun_Table"
 
@@ -78,7 +80,11 @@ abstract class ExpensesDatabase: RoomDatabase() {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, ExpensesDatabase::class.java, EXPENSES_TABLE_NAME).fallbackToDestructiveMigration().build()
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        ExpensesDatabase::class.java,
+                        EXPENSES_TABLE_NAME
+                    ).fallbackToDestructiveMigration().allowMainThreadQueries().build()
                     INSTANCE = instance
                 }
                 return instance

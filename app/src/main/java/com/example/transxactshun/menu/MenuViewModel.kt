@@ -9,15 +9,13 @@ class MenuViewModel : ViewModel() {
         R.drawable.icons_transaction,
         R.drawable.icons_graphs,
         R.drawable.icons_bill,
-        R.drawable.icons_budget,
-        R.drawable.icons_report,
+        R.drawable.icons_budget
     )
 
     val menuItemArray: ArrayList<String> = arrayListOf(
         "Transactions",
         "Spending Trends (Graphs)",
         "Bill Reminder",
-        "Set Monthly Budget",
-        "Share Receipts"
+        "Set Monthly Budget"
     )
 }

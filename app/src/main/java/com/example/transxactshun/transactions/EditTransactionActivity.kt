@@ -25,13 +25,15 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class EditTransactionActivity: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
     // EditText fields
     private lateinit var itemNameEditText: EditText
     private lateinit var itemPriceEditText: EditText
     private lateinit var spinnerPaymentType: Spinner
     private lateinit var spinnerCategoryType: Spinner
-//    private lateinit var purchaseLocationEditText: EditText
+
+    //    private lateinit var purchaseLocationEditText: EditText
     private lateinit var purchaseNotesEditText: EditText
     private lateinit var purchaseDateEditText: TextView
     private lateinit var purchaseTimeEditText: TextView
@@ -83,29 +85,47 @@ class EditTransactionActivity: AppCompatActivity(), DatePickerDialog.OnDateSetLi
             editTransactionDatabase = ExpensesDatabase.getInstance(this@EditTransactionActivity)
             editTransactionDao = editTransactionDatabase.expensesDatabaseDao
             editTransactionRepository = ExpensesRepository(editTransactionDao)
-            editTransactionViewModelFactory = EditTransactionViewModelFactory(editTransactionRepository)
+            editTransactionViewModelFactory =
+                EditTransactionViewModelFactory(editTransactionRepository)
             editTransactionViewModel =
                 ViewModelProvider(
                     this@EditTransactionActivity,
                     editTransactionViewModelFactory
                 )[EditTransactionViewModel::class.java]
             withContext(Main) {
-                editTransactionViewModel.id.value = intent.getLongExtra(TransactionHistoryActivity.TRANSACTION_ID_KEY, -1)
-                editTransactionViewModel.position.value = intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_POSITION_KEY, -1)
-                editTransactionViewModel.items.value = intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_NAME_KEY)
-                editTransactionViewModel.cost.value = intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_PRICE_KEY, 0)
-                editTransactionViewModel.paymentType.value = intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_PAYMENT_KEY, 0)
-                editTransactionViewModel.category.value = intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_CATEGORY_KEY, ExpenseCategory.OTHER.ordinal)
+                editTransactionViewModel.id.value =
+                    intent.getLongExtra(TransactionHistoryActivity.TRANSACTION_ID_KEY, -1)
+                editTransactionViewModel.position.value =
+                    intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_POSITION_KEY, -1)
+                editTransactionViewModel.items.value =
+                    intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_NAME_KEY)
+                editTransactionViewModel.cost.value =
+                    intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_PRICE_KEY, 0)
+                editTransactionViewModel.paymentType.value =
+                    intent.getIntExtra(TransactionHistoryActivity.TRANSACTION_PAYMENT_KEY, 0)
+                editTransactionViewModel.category.value = intent.getIntExtra(
+                    TransactionHistoryActivity.TRANSACTION_CATEGORY_KEY,
+                    ExpenseCategory.OTHER.ordinal
+                )
 //        val purchaseLocation = intent.getStringExtra("purchaseLocation")
-                editTransactionViewModel.note.value = intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_NOTES_KEY)
-                editTransactionViewModel.epochDate.value = intent.getLongExtra(TransactionHistoryActivity.TRANSACTION_DATE_KEY, 0)
-                editTransactionViewModel.email.value = intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_EMAIL_KEY)
-                editTransactionViewModel.vendor.value = intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_VENDOR_KEY)
+                editTransactionViewModel.note.value =
+                    intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_NOTES_KEY)
+                editTransactionViewModel.epochDate.value =
+                    intent.getLongExtra(TransactionHistoryActivity.TRANSACTION_DATE_KEY, 0)
+                editTransactionViewModel.email.value =
+                    intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_EMAIL_KEY)
+                editTransactionViewModel.vendor.value =
+                    intent.getStringExtra(TransactionHistoryActivity.TRANSACTION_VENDOR_KEY)
                 itemNameEditText.setText(editTransactionViewModel.items.value)
-                itemPriceEditText.setText(TransactionUtil.currencyFormatWithoutSign(editTransactionViewModel.cost.value!!))
+                itemPriceEditText.setText(
+                    TransactionUtil.currencyFormatWithoutSign(
+                        editTransactionViewModel.cost.value!!
+                    )
+                )
 //        purchaseLocationEditText.setText(purchaseLocation)
                 purchaseNotesEditText.setText(editTransactionViewModel.note.value)
-                purchaseDateEditText.text = TransactionUtil.millisecondsToDateTimeFormat(editTransactionViewModel.epochDate.value!!)
+                purchaseDateEditText.text =
+                    TransactionUtil.millisecondsToDateTimeFormat(editTransactionViewModel.epochDate.value!!)
                 spinnerPaymentType.setSelection(editTransactionViewModel.paymentType.value!!)
                 spinnerCategoryType.setSelection(editTransactionViewModel.category.value!!)
                 val calendar = Calendar.getInstance()
@@ -121,17 +141,31 @@ class EditTransactionActivity: AppCompatActivity(), DatePickerDialog.OnDateSetLi
                 editTransactionViewModel.hour.value = hh
                 editTransactionViewModel.minute.value = min
                 purchaseDateEditText.setOnClickListener {
-                    val datePickerDialog = DatePickerDialog(this@EditTransactionActivity, this@EditTransactionActivity, yy, mm, dd)
+                    val datePickerDialog = DatePickerDialog(
+                        this@EditTransactionActivity,
+                        this@EditTransactionActivity,
+                        yy,
+                        mm,
+                        dd
+                    )
                     datePickerDialog.show()
                 }
                 purchaseTimeEditText.setOnClickListener {
-                    val timePickerDialog = TimePickerDialog(this@EditTransactionActivity, this@EditTransactionActivity, hh, min, false)
+                    val timePickerDialog = TimePickerDialog(
+                        this@EditTransactionActivity,
+                        this@EditTransactionActivity,
+                        hh,
+                        min,
+                        false
+                    )
                     timePickerDialog.show()
                 }
 
                 editTransactionViewModel.epochDate.observe(this@EditTransactionActivity) {
-                    purchaseDateEditText.text = TransactionUtil.millisecondsToDateFormat(editTransactionViewModel.epochDate.value!!)
-                    purchaseTimeEditText.text = TransactionUtil.millisecondsToTimeFormat(editTransactionViewModel.epochDate.value!!)
+                    purchaseDateEditText.text =
+                        TransactionUtil.millisecondsToDateFormat(editTransactionViewModel.epochDate.value!!)
+                    purchaseTimeEditText.text =
+                        TransactionUtil.millisecondsToTimeFormat(editTransactionViewModel.epochDate.value!!)
                 }
             }
         }
@@ -155,49 +189,48 @@ class EditTransactionActivity: AppCompatActivity(), DatePickerDialog.OnDateSetLi
                 paymentMethodEdit,
                 purchaseNotesEdit,
                 itemCategoryEdit,
-                "")
+                ""
+            )
             editTransactionViewModel.adjustEntry(newEntry)
 
-            // Send values to TransactionHistoryActivity
-//            val saveEditsIntent = Intent(this, TransactionHistoryActivity::class.java)
-//            saveEditsIntent.putExtra("EditTransactionCalled", true)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_POSITION_KEY, position)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_NAME_KEY, itemNameEdit)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_PRICE_KEY, itemPriceEdit)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_DATE_KEY, purchaseDateEdit)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_PAYMENT_KEY, paymentMethodEdit)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_NOTES_KEY, purchaseNotesEdit)
-//            saveEditsIntent.putExtra(TransactionHistoryActivity.TRANSACTION_CATEGORY_KEY, itemCategoryEdit)
-//            startActivity(saveEditsIntent)
-            finish()
+
+            this.finish()
         }
 
-        // TODO: Not important as users can click the back button
         cancelButton.setOnClickListener() {
             // Exit activity
-            finish()
+            this.finish()
         }
 
         deleteButton.setOnClickListener() {
-            fun onClick(v: View?) {
-
+            try {
+                editTransactionViewModel.deleteEntry(editTransactionViewModel.id.value!!)
+                this.finish()
+            } catch (ex: Exception) {
+                Toast.makeText(
+                    baseContext,
+                    "Unable to delete entry!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
         }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         editTransactionViewModel.year.value = year
-        editTransactionViewModel.month.value = month+1
+        editTransactionViewModel.month.value = month + 1
         editTransactionViewModel.day.value = dayOfMonth
         val hour = editTransactionViewModel.hour.value!!
         val minute = editTransactionViewModel.minute.value!!
-        val monthStr = if (month+1 < 10) "0${month+1}" else "${month+1}"
+        val monthStr = if (month + 1 < 10) "0${month + 1}" else "${month + 1}"
         val dayStr = if (dayOfMonth < 10) "0${dayOfMonth}" else "$dayOfMonth"
         val hourStr = if (hour < 10) "0${hour}" else "$hour"
         val minuteStr = if (minute < 10) "0$minute}" else "$minute"
         val dateString = "${year}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}:00"
         editTransactionViewModel.epochDate.value = LocalDateTime.parse(dateString).toInstant(
-            ZoneOffset.UTC).toEpochMilli()
+            ZoneOffset.UTC
+        ).toEpochMilli()
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
@@ -209,8 +242,10 @@ class EditTransactionActivity: AppCompatActivity(), DatePickerDialog.OnDateSetLi
         val dayStr = if (day < 10) "0${day}" else "$day"
         val hourStr = if (hourOfDay < 10) "0${hourOfDay}" else "${hourOfDay}"
         val minuteStr = if (minute < 10) "0${minute}" else "$minute"
-        val dateString = "${editTransactionViewModel.year.value}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}:00"
+        val dateString =
+            "${editTransactionViewModel.year.value}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}:00"
         editTransactionViewModel.epochDate.value = LocalDateTime.parse(dateString).toInstant(
-            ZoneOffset.UTC).toEpochMilli()
+            ZoneOffset.UTC
+        ).toEpochMilli()
     }
 }

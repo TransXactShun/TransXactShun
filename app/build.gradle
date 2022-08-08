@@ -31,16 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += [
-            "-Xjvm-default=all",
+                "-Xjvm-default=all",
         ]
     }
 }
 
 apply plugin: 'kotlin-kapt'
 dependencies {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach{
-        kotlinOptions{
-            freeCompilerArgs +=["-Xjvm-default=all",]
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += ["-Xjvm-default=all",]
         }
     }
 
@@ -81,4 +81,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
     implementation 'androidx.fragment:fragment-ktx:1.5.0'
+
 }
