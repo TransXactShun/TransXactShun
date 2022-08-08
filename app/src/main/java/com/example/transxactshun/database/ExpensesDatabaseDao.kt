@@ -13,11 +13,20 @@ interface ExpensesDatabaseDao {
     @Insert
     suspend fun insertExpenseEntry(entry: ExpensesDatabaseEntry)
 
-    @Query("UPDATE ${ExpensesDatabase.EXPENSES_TABLE_NAME} SET " +
-            "cost = :cost, items = :items, date = :epochDate, payment_type = :paymentType, note = :note, category = :category " +
-            "WHERE id = :id"
+    @Query(
+        "UPDATE ${ExpensesDatabase.EXPENSES_TABLE_NAME} SET " +
+                "cost = :cost, items = :items, date = :epochDate, payment_type = :paymentType, note = :note, category = :category " +
+                "WHERE id = :id"
     )
-    fun adjustEntry(id: Long, cost: Int, items: String, epochDate: Long, paymentType: Int, note: String, category: Int)
+    fun adjustEntry(
+        id: Long,
+        cost: Int,
+        items: String,
+        epochDate: Long,
+        paymentType: Int,
+        note: String,
+        category: Int
+    )
 
     @Query("SELECT * FROM ${ExpensesDatabase.EXPENSES_TABLE_NAME}")
     fun getEntireExpensesHistory(): Flow<List<ExpensesDatabaseEntry>>
@@ -30,6 +39,9 @@ interface ExpensesDatabaseDao {
 
     @Query("SELECT * FROM ${ExpensesDatabase.EXPENSES_TABLE_NAME} WHERE date >= :startDate AND date <= :endDate ORDER BY date")
     fun getExpensesHistoryBetween(startDate: Long, endDate: Long): Flow<List<ExpensesDatabaseEntry>>
+
+    @Query("SELECT SUM(cost) FROM ${ExpensesDatabase.EXPENSES_TABLE_NAME} WHERE date >= :startDate AND date <= :endDate")
+    fun getTotalItemValueBetween(startDate: Long, endDate: Long): Int
 
     @Query("DELETE FROM ${ExpensesDatabase.EXPENSES_TABLE_NAME}")
     fun deleteAll()

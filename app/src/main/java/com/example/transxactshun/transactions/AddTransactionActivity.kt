@@ -14,7 +14,13 @@ import com.example.transxactshun.bills.AddReminderViewModel
 import com.example.transxactshun.database.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -25,6 +31,8 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
     private lateinit var itemPriceEditText: EditText
     private lateinit var purchaseNotesEditText: EditText
     private lateinit var vendorNameEditText: EditText
+
+    private val DEF_BUDGET = 500.0
 
     // UI spinner elements
     private lateinit var spinnerPaymentType: Spinner
@@ -67,6 +75,9 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         } else {
             returnToLoginScreen()
         }
+
+        // Initialize Firebase DB
+        databaseFirebase = Firebase.database.reference
 
         //init view model
         addTransactionViewModel = ViewModelProvider(this).get(AddTransactionViewModel::class.java)
@@ -148,7 +159,9 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                 )
                     .show()
 
+
                 calculateBudget()
+
 
             } catch (ex: Exception) {
                 Toast.makeText(
@@ -173,9 +186,59 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
     private fun calculateBudget() {
         try {
+            // get start and end date for current month
+            var calendarObjectStart = Calendar.getInstance()
+            var calendarObjectEnd = Calendar.getInstance()
+
+            calendarObjectStart.set(
+                Calendar.DAY_OF_MONTH,
+                calendarObjectStart.getActualMinimum(Calendar.DAY_OF_MONTH)
+            )
+            calendarObjectStart.set(Calendar.HOUR_OF_DAY, 0);
+            calendarObjectStart.set(Calendar.MINUTE, 0);
+            calendarObjectStart.set(Calendar.SECOND, 0);
+            calendarObjectStart.set(Calendar.MILLISECOND, 0);
+
+
+            calendarObjectEnd.set(
+                Calendar.DAY_OF_MONTH,
+                calendarObjectEnd.getActualMaximum(Calendar.DAY_OF_MONTH)
+            )
+            calendarObjectEnd.set(Calendar.HOUR_OF_DAY, 23);
+            calendarObjectEnd.set(Calendar.MINUTE, 59);
+            calendarObjectEnd.set(Calendar.SECOND, 59);
+            calendarObjectEnd.set(Calendar.MILLISECOND, 999);
+
+            // get total transaction amount
+            var totalAmountTransactions = repository.getTotalCostBetween(
+                calendarObjectStart.timeInMillis,
+                calendarObjectEnd.timeInMillis
+            )
+
+            // convert cents to dollar amount
+            var totalTransactionAmountDollar = totalAmountTransactions / 100.0
+
+            // get total budget for user
+            databaseFirebase.child("userBudget").child(userUID).child("budget").get()
+                .addOnSuccessListener {
+                    var budgetAmount = 0.0
+                    if (it.value == null) {
+                        budgetAmount = DEF_BUDGET
+                    } else {
+                        budgetAmount = it.value.toString().toDouble()
+                    }
+
+                    if (totalTransactionAmountDollar > budgetAmount) {
+                        sendSmsNotification()
+                    }
+
+                }.addOnFailureListener {
+                    throw Exception()
+                }
 
 
         } catch (ex: Exception) {
+            println("debug: $ex")
             Toast.makeText(
                 baseContext,
                 "Unable to calculate budget!",
@@ -187,7 +250,7 @@ class AddTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
     private fun sendSmsNotification() {
         try {
-
+            println("debug: sms triggered")
         } catch (ex: Exception) {
             Toast.makeText(
                 baseContext,

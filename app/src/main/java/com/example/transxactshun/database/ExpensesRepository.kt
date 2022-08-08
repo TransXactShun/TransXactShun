@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ExpensesRepository(private val expensesDatabaseDao: ExpensesDatabaseDao) {
-    val entireExpensesHistory: Flow<List<ExpensesDatabaseEntry>> = expensesDatabaseDao.getEntireExpensesHistorySortedByDate()
+    val entireExpensesHistory: Flow<List<ExpensesDatabaseEntry>> =
+        expensesDatabaseDao.getEntireExpensesHistorySortedByDate()
 
     /**
      * Inserts a single entry into the database
@@ -53,6 +54,10 @@ class ExpensesRepository(private val expensesDatabaseDao: ExpensesDatabaseDao) {
      */
     fun getExpensesBetween(startDate: Long, endDate: Long): Flow<List<ExpensesDatabaseEntry>> {
         return expensesDatabaseDao.getExpensesHistoryBetween(startDate, endDate)
+    }
+
+    fun getTotalCostBetween(startDate: Long, endDate: Long): Int {
+            return expensesDatabaseDao.getTotalItemValueBetween(startDate, endDate)
     }
 
     /**

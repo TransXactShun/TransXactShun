@@ -58,8 +58,6 @@ class BudgetActivity : AppCompatActivity() {
 
         // retrieve values from firebase only once
         if (savedInstanceState == null) {
-            //val remindersListQuery = database.child("userBudget").child(userUID).get()
-
 
             database.child("userBudget").child(userUID).child("budget").get().addOnSuccessListener {
                 if (it.value == null) {

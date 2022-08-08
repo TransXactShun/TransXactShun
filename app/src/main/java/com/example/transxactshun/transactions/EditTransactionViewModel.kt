@@ -5,9 +5,10 @@ import com.example.transxactshun.database.ExpensesDatabaseEntry
 import com.example.transxactshun.database.ExpensesRepository
 import java.lang.IllegalArgumentException
 
-class EditTransactionViewModel(private val repository: ExpensesRepository) : ViewModel()  {
+class EditTransactionViewModel(private val repository: ExpensesRepository) : ViewModel() {
     val TAG = "EditTransactionViewModel"
-    val expensesHistory: LiveData<List<ExpensesDatabaseEntry>> = repository.entireExpensesHistory.asLiveData()
+    val expensesHistory: LiveData<List<ExpensesDatabaseEntry>> =
+        repository.entireExpensesHistory.asLiveData()
     val id = MutableLiveData<Long>()
     val position = MutableLiveData<Int>()
     val email = MutableLiveData<String>()
@@ -27,9 +28,15 @@ class EditTransactionViewModel(private val repository: ExpensesRepository) : Vie
     fun adjustEntry(entry: ExpensesDatabaseEntry) {
         repository.adjustEntry(entry)
     }
+
+    fun deleteEntry(id: Long) {
+        repository.delete(id)
+    }
+
 }
 
-class EditTransactionViewModelFactory(private val repository: ExpensesRepository): ViewModelProvider.Factory {
+class EditTransactionViewModelFactory(private val repository: ExpensesRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditTransactionViewModel::class.java))
             return EditTransactionViewModel(repository) as T
