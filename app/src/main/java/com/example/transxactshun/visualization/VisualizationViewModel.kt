@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.time.*
+import java.time.temporal.TemporalAccessor
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.exp
@@ -24,8 +25,12 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
         const val ONE_DAY_IN_MS =      86400000L
         const val ONE_YEAR_IN_MS =  31536000000L
         const val ONE_MONTH_IN_MS =  2628000000L
+        const val _28_DAYS = ONE_DAY_IN_MS * 28
+        const val _29_DAYS = ONE_DAY_IN_MS * 29
+        const val _30_DAYS = ONE_DAY_IN_MS * 30
+        const val _31_DAYS = ONE_DAY_IN_MS * 31
         fun closestDateFullWeekGoingBack(days: Int): Long {
-            val now = LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles"))
+            val now = LocalDateTime.now().atZone(ZoneOffset.UTC)
             var closestStartOfWeek = now
             when (now.dayOfWeek) {
                 DayOfWeek.MONDAY -> closestStartOfWeek = now.minus(Period.ofDays(0))
@@ -128,7 +133,10 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
     suspend fun getExpensesByTimeGroup(timeGroup: TimeGroup): ArrayList<TrendChartBuilderValue> {
         var amountOfData = 0    // Will be in days/weeks/months depending on user selection
         var amountOfDataInDays = 0  // For determining how many days to go back
-        var amountOfDataInMilliseconds = 0L  // For determining separate blocks of data
+        lateinit var periodInMilliseconds: LongArray
+        val calendar = Calendar.getInstance()
+        val currMonth = calendar.get(Calendar.MONTH)
+        val currYear = calendar.get(Calendar.YEAR)
         when (timeGroup) {
             // Have to allow some extra leeway because when weeks is selected, we need to ensure that
             // full week is selected starting from Monday, therefore the partialExpensesHistory
@@ -136,17 +144,17 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
             TimeGroup.DAILY -> {
                 amountOfData = 68
                 amountOfDataInDays = 60
-                amountOfDataInMilliseconds = ONE_DAY_IN_MS
+                periodInMilliseconds = LongArray(amountOfData) { ONE_DAY_IN_MS }
             }
             TimeGroup.WEEKLY -> {
                 amountOfData = 54
                 amountOfDataInDays = 365
-                amountOfDataInMilliseconds = ONE_WEEK_IN_MS
+                periodInMilliseconds = LongArray(amountOfData) { ONE_WEEK_IN_MS }
             }
             TimeGroup.MONTHLY -> {
                 amountOfData = 13
                 amountOfDataInDays = 365
-                amountOfDataInMilliseconds = ONE_MONTH_IN_MS
+                periodInMilliseconds = getDaysOfMonthArray(currYear, currMonth)
             }
         }
         val results = ArrayList<TrendChartBuilderValue>(amountOfData)
@@ -161,9 +169,8 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
         var index = 0
         while (startOfPeriod <= now) {
             timePeriod[index] = startOfPeriod
-            startOfPeriod += amountOfDataInMilliseconds
+            startOfPeriod += periodInMilliseconds[index]
             index += 1
-//                Log.i(TAG, "index: ${index}, startOfPeriod: ${startOfPeriod}, endOfPeriod: $now")
         }
 
         // Loop 2 finds all expenses in each time bound and adds them to total and expenses
@@ -183,8 +190,27 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
         return results
     }
 
+    private fun getDaysOfMonthArray(year: Int, month: Int): LongArray {
+        val result = LongArray(13) {0}
+        val allMonths = if (year % 4 == 0 && year % 100 != 0) {
+            arrayOf(
+                // Dec    Jan       Feb       Mar       Apr       May       Jun       Jul       Aug       Sep       Oct       Nov       Dec       Jan
+                _31_DAYS, _31_DAYS, _29_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS,
+                          _31_DAYS, _29_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS
+            )
+        }
+        else arrayOf(
+                _31_DAYS, _31_DAYS, _28_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS,
+                          _31_DAYS, _28_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _30_DAYS, _31_DAYS, _31_DAYS
+            )
+        for ((index, mm) in (month+12 downTo month).withIndex()) {
+            result[index] = allMonths[mm+1]
+        }
+        return result
+    }
+
     /**
-     * Test only
+     * Test and developement only
      */
     fun addFakeEntries() {
         CoroutineScope(IO).launch {
