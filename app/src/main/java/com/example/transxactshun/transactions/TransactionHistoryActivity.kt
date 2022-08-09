@@ -45,46 +45,6 @@ class TransactionHistoryActivity : AppCompatActivity() {
     private lateinit var transactionHistoryViewModelFactory: TransactionHistoryViewModelFactory
     lateinit var transactionHistoryViewModel: TransactionHistoryViewModel
 
-    // Creating dummy transactions with the constructor
-    val transactionList: Array<Transaction> = arrayOf(
-        Transaction("Peanut butter",
-            "$15",
-            "Tuesday, July 19 at 9:30 AM",
-            "Credit Card",
-            "It was crunchy",
-            "Food"),
-        Transaction("Jam",
-            "$8",
-            "Thursday, July 21 at 4:50 PM",
-            "Debit Card",
-            "Very sweet",
-            "Food"),
-        Transaction("Jam",
-            "$8",
-            "Thursday, July 21 at 4:50 PM",
-            "Debit Card",
-            "Very sweet",
-            "Food"),
-        Transaction("Jam",
-            "$8",
-            "Thursday, July 21 at 4:50 PM",
-            "Debit Card",
-            "Very sweet",
-            "Food"),
-        Transaction("Jam",
-            "$8",
-            "Thursday, July 21 at 4:50 PM",
-            "Debit Card",
-            "Very sweet",
-            "Food"),
-        Transaction("Jam",
-            "$8",
-            "Thursday, July 21 at 4:50 PM",
-            "Debit Card",
-            "Very sweet",
-            "Food")
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_history)
@@ -146,9 +106,6 @@ class TransactionHistoryActivity : AppCompatActivity() {
         super.onResume()
         // If EditTransactionHistory was called and Save was used
         val editTransactionCalled = intent.getBooleanExtra("EditTransactionCalled", false) // Returns a Boolean value"
-        println("TRACE: CHECKING IF STATEMENT")
-        println(editTransactionCalled)
-        println(intent.getStringExtra("itemName"))
         if (editTransactionCalled) {
             println("TRACE: IF STATEMENT WAS HIT")
             // Save was called retrieve new values sent by putExtra()

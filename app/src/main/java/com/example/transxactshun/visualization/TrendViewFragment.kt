@@ -33,8 +33,7 @@ import lecho.lib.hellocharts.view.PreviewColumnChartView
 
 enum class TimeGroup(val displayValue: String) {
     DAILY("Daily"),
-    WEEKLY("Weekly"),
-    MONTHLY("Monthly")
+    WEEKLY("Weekly")
 }
 
 class TrendViewFragment: Fragment() {
@@ -44,7 +43,7 @@ class TrendViewFragment: Fragment() {
     private lateinit var previewChart: PreviewColumnChartView
     private lateinit var btnDaily: Button
     private lateinit var btnWeekly: Button
-    private lateinit var btnMonthly: Button
+//    private lateinit var btnMonthly: Button
     private lateinit var currentCategoryText: TextView
     private lateinit var totalCostTextValue: TextView
     private lateinit var totalCostTextHeader: TextView
@@ -71,7 +70,6 @@ class TrendViewFragment: Fragment() {
         currentCategoryText = ui.findViewById(R.id.current_time_group_text)
         btnDaily = ui.findViewById(R.id.btn_daily)
         btnWeekly = ui.findViewById(R.id.btn_weekly)
-        btnMonthly = ui.findViewById(R.id.btn_monthly)
         costReportView = ui.findViewById(R.id.trend_report_summary)
         totalCostTextHeader = ui.findViewById(R.id.trend_report_header)
         totalCostTextValue = ui.findViewById(R.id.trend_report_total)
@@ -86,9 +84,9 @@ class TrendViewFragment: Fragment() {
         btnWeekly.setOnClickListener {
             viewModel.timeGroup.value = TimeGroup.WEEKLY
         }
-        btnMonthly.setOnClickListener {
-            viewModel.timeGroup.value = TimeGroup.MONTHLY
-        }
+//        btnMonthly.setOnClickListener {
+//            viewModel.timeGroup.value = TimeGroup.MONTHLY
+//        }
 
         viewModel.partialExpensesHistory.observe(viewLifecycleOwner) {
             buildColumnCharts(viewModel.timeGroup.value!!)
@@ -121,7 +119,6 @@ class TrendViewFragment: Fragment() {
             when (timeGroup) {
                 TimeGroup.DAILY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.DAILY)}
                 TimeGroup.WEEKLY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.WEEKLY)}
-                TimeGroup.MONTHLY -> {chartBuilderValue = viewModel.getExpensesByTimeGroup(TimeGroup.MONTHLY)}
                 else -> {}
             }
             val numColumns = chartBuilderValue.size

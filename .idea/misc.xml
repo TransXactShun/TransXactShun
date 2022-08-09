@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/layout/transaction_purchase_location.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/transaction_purchase_method.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/transaction_purchase_notes.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/visualization_column_trend_layout.xml" value="0.2223731884057971" />
         <entry key="app/src/main/res/layout/visualization_main_layout.xml" value="0.5625" />
         <entry key="app/src/main/res/layout/visualization_piechart_layout.xml" value="0.2223731884057971" />
         <entry key="app/src/main/res/menu/visualization_switch_mode_actionbar_button.xml" value="0.5625" />
