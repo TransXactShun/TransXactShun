@@ -167,7 +167,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
 
         // Loop 1 establishes the time bounds for each week
         var index = 0
-        while (startOfPeriod <= now) {
+        while (index < amountOfData) {
             timePeriod[index] = startOfPeriod
             startOfPeriod += periodInMilliseconds[index]
             index += 1
@@ -176,15 +176,16 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
         // Loop 2 finds all expenses in each time bound and adds them to total and expenses
         partialExpensesHistory.value?.forEach {
             val i = (timePeriod.binarySearch(it.epochDate) + 2) * -1
+//            Log.i(TAG, "timePeriod: ${timePeriod[i]} at index $i")
             totalInPeriodPerCategory[i][it.category] += it.cost
             totalInPeriod[i] += it.cost
             expensesInPeriod[i].add(SingleExpenseSummary(it.epochDate, it.vendor, it.cost, ExpenseCategory.values()[it.category]))
         }
 
         timePeriod.forEachIndexed { index, period ->
-            if (period > 0) {
+            if (period in 1..now) {
                 results.add(TrendChartBuilderValue(period, totalInPeriodPerCategory[index], totalInPeriod[index], expensesInPeriod[index]))
-                Log.i(TAG, "period: ${period}, totalPerCategory: ${totalInPeriodPerCategory[index]}, totalInPeriod: ${totalInPeriod[index]}, expenses: ${expensesInPeriod[index]}")
+//                Log.i(TAG, "period: ${period}, totalPerCategory: ${totalInPeriodPerCategory[index]}, totalInPeriod: ${totalInPeriod[index]}, expenses: ${expensesInPeriod[index]}")
             }
         }
         return results
@@ -219,7 +220,7 @@ class VisualizationViewModel(private val repository: ExpensesRepository) : ViewM
                 cost = 1500,
                 email = "test",
                 items = "Stuff",
-                epochDate = 1658876844006,
+                epochDate = 1660007502702 + 300000,
                 paymentType = 0,
                 note = "",
                 category = 0,
