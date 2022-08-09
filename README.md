@@ -32,14 +32,15 @@ TransXactShun is the next generation application integrating state-of-the-art cl
 
 ## UI Mock Up
 
-![](imgSrc/UIMockUp2.png)
+![UI Mock Up](imgSrc/UIMockUp2.png)
+
 ## MVVM Model
 
-![](imgSrc/diagram_final_trans_3.png)
+![MVVM Model](imgSrc/diagram_final_trans_3.png)
 
 ## Thread Design Model
 
-![](imgSrc/threadDiagram.png)
+![Thread Design Model](imgSrc/threadDiagram.png)
 
 ## References
 
