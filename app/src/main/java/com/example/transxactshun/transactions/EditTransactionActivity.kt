@@ -70,6 +70,8 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         purchaseNotesEditText = findViewById(R.id.editPurchaseNotes)
         purchaseDateEditText = findViewById(R.id.editPurchaseDate)
         purchaseTimeEditText = findViewById(R.id.editPurchaseTime)
+        purchaseTimeImageView = findViewById(R.id.editPurchaseTime_dropdown_arrow)
+        purchaseDateImageView = findViewById(R.id.editPurchaseDate_dropdown_arrow)
 
         // add data to spinner
         spinnerPaymentType.adapter = ArrayAdapter<PaymentType>(

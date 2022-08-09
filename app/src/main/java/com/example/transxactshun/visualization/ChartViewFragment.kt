@@ -217,13 +217,6 @@ class ChartViewFragment: Fragment() {
         super.onDestroy()
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        if (viewModel.pieChartSelectedCategory.value != null) {
-//            outState.putInt(CATEGORY_SELECTED_KEY, viewModel.pieChartSelectedCategory.value!!.ordinal)
-//        }
-//    }
-
     inner class ChartOnTouchListener: PieChartOnValueSelectListener {
 
         /**
