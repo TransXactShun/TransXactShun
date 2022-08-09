@@ -185,8 +185,6 @@ class EditTransactionActivity : AppCompatActivity(), DatePickerDialog.OnDateSetL
         saveButton.setOnClickListener() {
             // Obtain current EditText values
             val itemNameEdit: String = itemNameEditText.text.toString()
-            println("TRACE: CHECKING NAME STRING IN EDIT TEXT")
-            println(itemNameEdit)
 
             val costText = itemPriceEditText.text.toString()
             val costDelimited = costText.split(".")

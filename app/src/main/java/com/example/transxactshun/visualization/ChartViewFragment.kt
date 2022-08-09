@@ -42,10 +42,6 @@ class ChartViewFragment: Fragment() {
         ExpensesRepository(ExpensesDatabase.getInstance(requireContext()).expensesDatabaseDao)
     ) }
 
-    // For test
-    private lateinit var btnAdd: Button
-    private lateinit var btnDeleteAll: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CoroutineScope(IO).launch {
@@ -61,8 +57,6 @@ class ChartViewFragment: Fragment() {
         val ui = inflater.inflate(R.layout.visualization_piechart_layout, container, false)
 
         pieChart = ui.findViewById(R.id.pie_chart)
-//        btnAdd = ui.findViewById(R.id.btn_add)
-//        btnDeleteAll = ui.findViewById(R.id.btn_delete)
         dateRangeText = ui.findViewById(R.id.date_range)
         categoryReportHeader = ui.findViewById(R.id.report_header)
         categoryReportView = ui.findViewById(R.id.report_summary)
@@ -108,13 +102,6 @@ class ChartViewFragment: Fragment() {
 
         pieChart.onValueTouchListener = ChartOnTouchListener()
 
-        // These two buttons are for testing and developement and demonstration only
-//        btnAdd.setOnClickListener {
-//            viewModel.addFakeEntries()
-//        }
-//        btnDeleteAll.setOnClickListener {
-//            viewModel.deleteAll()
-//        }
         dateRangeText.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.dateRangePicker()
             datePicker.setSelection(androidx.core.util.Pair(viewModel.startDate.value!!, viewModel.endDate.value!!))

@@ -1,5 +1,6 @@
 package com.example.transxactshun.visualization
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,9 +73,7 @@ class SingleCategoryReportGridAdapter(
      */
     override fun onBindViewHolder(holder: SingleCategoryReportViewHolder, position: Int) {
         val item = expenses[position]
-        val unformattedDate = Instant.ofEpochMilli(item.date).atZone(ZoneOffset.UTC).toLocalDate()
-        val dateFormatter = DateTimeFormatter.ofPattern("EEE MMM dd, yyyy", Locale.CANADA)
-        holder.dateText.text = dateFormatter.format(unformattedDate)
+        holder.dateText.text = VisualizationUtil.millisecondsToDateFormat(item.date)
         holder.vendorText.text = item.vendor
         val costString = VisualizationUtil.currencyFormat(item.cost)
         holder.costText.text = costString
